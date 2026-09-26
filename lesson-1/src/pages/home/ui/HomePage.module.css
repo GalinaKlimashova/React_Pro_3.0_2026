@@ -1,0 +1,15 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('../../../assets/HARRP___.TTF');
+
+}
+
+.title {
+    font-family: myFirstFont !important;
+    color: #c39a1c;
+}
+
+.homePageContainer {
+    overflow: auto;
+    font-family: myFirstFont !important;
+}
