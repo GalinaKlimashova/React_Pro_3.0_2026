@@ -7,28 +7,28 @@ import React from "react";
 type Props = {
   students: StudentInfo[],
   filter: Filter,
-  tasks: Task[],
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
   removingId: string,
+  setRemovingId: React.Dispatch<React.SetStateAction<string>>,
 };
 
 export const StudentsList = React.memo(function StudentsList({ students,
   filter,
   removingId,
-  setTasks,
-  tasks
+  setRemovingId,
+  setTasks
 }: Props) {
   return (
     <div className={styles.studentList}>
-      {students.map(student => (
+      {students.map((student: StudentInfo) => (
         <div key={student.name} className={styles.tasks}>
           <StudentCard
             key={student.name}
             filter={filter}
             student={student}
-            tasks={tasks}
             setTasks={setTasks}
             removingId={removingId}
+            setRemovingId={setRemovingId}
           />
         </div>
       ))}

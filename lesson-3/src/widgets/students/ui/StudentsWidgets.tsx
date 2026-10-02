@@ -6,22 +6,23 @@ import type { Filter } from "features/tasksList/model/useTasks";
 type Props = {
     filter: Filter;
     students: StudentInfo[];
-    tasks: Task[],
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     removingId: string,
+    setRemovingId: React.Dispatch<React.SetStateAction<string>>,
 };
 
 export function StudentsWidget({ filter,
     students,
     removingId,
     setTasks,
-    tasks }: Props) {
+    setRemovingId
+}: Props) {
     return (
         <StudentsList
             students={students}
             filter={filter}
             removingId={removingId}
-            tasks={tasks}
+            setRemovingId={setRemovingId}
             setTasks={setTasks} />
     )
 }

@@ -1,3 +1,5 @@
 .tasks {
     display: block;
+    overflow-y: auto;
+    max-height: 26rem;
 }

@@ -8,6 +8,7 @@
     display: inline-block;
     font-size: 1.0rem;
     height: 2rem;
+    max-width: 15rem;
 }
 
 .submitButton {

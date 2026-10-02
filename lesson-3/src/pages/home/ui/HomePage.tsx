@@ -7,7 +7,6 @@ import type { Task } from "entities/task";
 type Props = {
   filter: Filter;
   students: StudentInfo[];
-  tasks: Task[],
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
   removingId: string,
   setRemovingId: React.Dispatch<React.SetStateAction<string>>,
@@ -15,15 +14,14 @@ type Props = {
 
 export function HomePage({
   filter, students,
-  removingId, tasks, setTasks }: Props) {
-
+  removingId, setTasks, setRemovingId }: Props) {
   return (
     <div className={styles.homePageContainer}>
       <StudentsWidget filter={filter}
         students={students}
-        tasks={tasks}
         setTasks={setTasks}
         removingId={removingId}
+        setRemovingId={setRemovingId}
       />
     </div>
   )

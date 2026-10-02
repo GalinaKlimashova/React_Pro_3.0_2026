@@ -6,7 +6,8 @@ import styles from "./StudentCard.module.css";
 
 export function StudentCard({
     student, filter,
-    removingId, setTasks }: Props) {
+    removingId, setTasks, setRemovingId }: Props) {
+
     return (
         <div className={styles.card}>
             <div className={styles.studentData}>
@@ -22,6 +23,7 @@ export function StudentCard({
                 setTasks={setTasks}
                 filter={filter}
                 removingId={removingId}
+                setRemovingId={setRemovingId}
             />
         </div>
     );

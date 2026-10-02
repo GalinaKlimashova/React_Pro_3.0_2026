@@ -11,7 +11,7 @@ export interface StudentInfo {
 export type Props = {
     student: StudentInfo;
     filter: Filter;
-    tasks: Task[],
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     removingId: string,
+    setRemovingId: React.Dispatch<React.SetStateAction<string>>
 };

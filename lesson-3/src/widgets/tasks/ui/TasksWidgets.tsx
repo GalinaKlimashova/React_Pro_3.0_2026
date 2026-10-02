@@ -7,7 +7,8 @@ type Props = {
     tasks: Task[],
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     filter: Filter,
-    removingId: string
+    removingId: string,
+    setRemovingId: React.Dispatch<React.SetStateAction<string>>,
 };
 
 export const TasksWidget = React.memo(function TasksWidget({
@@ -15,12 +16,12 @@ export const TasksWidget = React.memo(function TasksWidget({
     setTasks,
     filter,
     removingId,
+    setRemovingId
 }: Props) {
-
     const { tasksRes } = useTasks(tasks,
         setTasks,
         filter,
-        removingId);
+        removingId, setRemovingId);
 
     return <TasksList tasks={tasksRes} />;
 });
