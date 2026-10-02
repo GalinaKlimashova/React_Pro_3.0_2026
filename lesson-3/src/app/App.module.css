@@ -1,0 +1,19 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url('../assets/HARRP___.TTF');
+
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-image: url('../assets/hogwarts.jpg');
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
