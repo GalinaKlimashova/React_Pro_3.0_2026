@@ -1,5 +1,5 @@
 import type { Task } from "entities/task";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { allStr, completedStr } from "shared/Initialdata/constants";
 
 export type Filter = 'all' | 'completed' | 'incomplete';
@@ -37,16 +37,16 @@ export function useTasks(
         setTasksFilter(upadetTaskList);
     }
 
-    const removeTaskWithUseCallback = useMemo(() => (id: string, updatedTasks: Task[]) => {
+    const removeTaskWithUseCallback = useCallback((id: string, updatedTasks: Task[]) => {
         return removeTask(id, updatedTasks);
     }, []);
 
     useEffect(() => {
         Promise.resolve().then(() => {
-            // with useMemo()
+            // with useCallback()
             setFilterWithUseMemo(filter, tasksFilter);
 
-            //without useMemo()
+            //without useCallback()
             // setFilter(filter, tasksFilter);
         });
     }, [filter, tasksFilter]);
