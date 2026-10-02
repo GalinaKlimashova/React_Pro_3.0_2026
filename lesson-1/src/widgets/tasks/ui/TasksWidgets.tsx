@@ -1,7 +1,6 @@
 import type { Task } from "entities/task";
 import { TasksList } from "features/tasksList";
 import { useTasks, type Filter } from "features/tasksList/model/useTasks";
-import React from "react";
 
 type Props = {
     tasks: Task[],
@@ -10,7 +9,7 @@ type Props = {
     removingId: string
 };
 
-export const TasksWidget = React.memo(function TasksWidget({
+export function TasksWidget({
     tasks,
     setTasks,
     filter,
@@ -23,4 +22,4 @@ export const TasksWidget = React.memo(function TasksWidget({
         removingId);
 
     return <TasksList tasks={tasksRes} />;
-});
+};

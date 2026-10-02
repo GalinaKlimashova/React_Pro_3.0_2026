@@ -2,7 +2,6 @@ import { StudentCard, type StudentInfo } from "entities/student";
 import styles from "./StudentsList.module.css";
 import type { Filter } from "features/tasksList/model/useTasks";
 import type { Task } from "entities/task";
-import React from "react";
 
 type Props = {
   students: StudentInfo[],
@@ -12,7 +11,7 @@ type Props = {
   removingId: string,
 };
 
-export const StudentsList = React.memo(function StudentsList({ students,
+export function StudentsList({ students,
   filter,
   removingId,
   setTasks,
@@ -34,4 +33,4 @@ export const StudentsList = React.memo(function StudentsList({ students,
       ))}
     </div>
   );
-});
+}
