@@ -1,0 +1,7 @@
+.submitButton {
+    width: 8rem;
+    height: 3rem;
+    font-size: 1.2rem;
+    font-family: myFirstFont !important;
+    margin: 0 0.3rem;
+}
