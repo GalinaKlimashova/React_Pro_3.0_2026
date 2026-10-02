@@ -1,9 +1,9 @@
 import type { Filter } from 'features/tasksList/model/useTasks';
-import type React from 'react';
+import React from 'react';
 import gerb from '../../../assets/gerb.png';
 import styles from "./TitleBlock.module.css";
 import { RadioButtonsBlock } from 'widgets/radioButtonsBlock';
-import { ListWidget } from 'widgets/listInput';
+import { ListWidget } from 'widgets/listWidget';
 import { mainTitle, subTitle } from 'shared/Initialdata/constants';
 import type { Task } from 'entities/task';
 
@@ -16,7 +16,7 @@ type Props = {
   setFilter: React.Dispatch<React.SetStateAction<Filter>>
 }
 
-export function TitleBlock({ filter,
+export const TitleBlock = React.memo(function TitleBlock({ filter,
   setFilter, tasks, setRemovingId
 }: Props) {
   return (
@@ -40,4 +40,4 @@ export function TitleBlock({ filter,
       </div>
     </div>
   )
-}
+});
