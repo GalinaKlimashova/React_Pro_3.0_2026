@@ -6,6 +6,7 @@ import { RadioButtonsBlock } from 'widgets/radioButtonsBlock';
 import { ListWidget } from 'widgets/listWidget';
 import { mainTitle, subTitle } from 'shared/Initialdata/constants';
 import type { Task } from 'entities/task';
+import { useEffect, useState } from 'react';
 
 type Props = {
   tasks: Task[],
@@ -17,6 +18,21 @@ type Props = {
 export function TitleBlock({ filter,
   setFilter, tasks, setRemovingId
 }: Props) {
+
+  const [tasksRes, setTasksRes] = useState<Task[]>(tasks);
+
+  async function updateTasks(newTaskArray: Task[]) {
+    setTasksRes(newTaskArray);
+  }
+
+  useEffect(() => {
+    if (JSON.stringify(tasks) !== JSON.stringify(tasksRes)) {
+      Promise.resolve().then(() => {
+        updateTasks(tasks);
+      });
+    }
+  }, [tasks]);
+
   return (
     <div className={styles.titleBlock}>
       <div className={styles.gerbBlock}><img className={styles.gerb} src={gerb} /></div>

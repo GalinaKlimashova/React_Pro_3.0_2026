@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { tasksApi } from 'entities/task';
+import { baseApi } from 'shared/api/baseApi';
 
 export const store = configureStore({
     reducer: {
-        [tasksApi.reducerPath]: tasksApi.reducer
+        // Подключаем единый редьюсер
+        [baseApi.reducerPath]: baseApi.reducer,
     },
+    // Добавляем единый middleware для поддержки кэширования, инвалидации и т.д.
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(tasksApi.middleware),
+        getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

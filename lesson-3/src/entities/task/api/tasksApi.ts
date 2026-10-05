@@ -1,12 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from 'shared/api/baseApi';
 import type { Task } from '../model/types';
 
-const baseQueryUrl = "https://jsonplaceholder.typicode.com";
-
-export const tasksApi = createApi({
-    reducerPath: 'tasksApi',
-    baseQuery: fetchBaseQuery({ baseUrl: baseQueryUrl }),
-    tagTypes: ['Tasks'],
+const tasksApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getTasks: build.query<Task[], void>({
             query: () => 'todos',
@@ -14,6 +9,10 @@ export const tasksApi = createApi({
             providesTags: ['Tasks'],
         })
     }),
+    // Предотвращает случайную перезапись при hot-reload
+    overrideExisting: false,
 });
 
-export const { useGetTasksQuery } = tasksApi;
+export const {
+    useGetTasksQuery
+} = tasksApi;

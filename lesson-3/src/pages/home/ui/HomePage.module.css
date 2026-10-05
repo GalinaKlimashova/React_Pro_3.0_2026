@@ -1,15 +1,36 @@
-@font-face {
-    font-family: myFirstFont;
-    src: url('../../../assets/HARRP___.TTF');
-
-}
-
-.title {
-    font-family: myFirstFont !important;
-    color: #c39a1c;
-}
-
 .homePageContainer {
     overflow: auto;
-    font-family: myFirstFont !important;
+}
+
+.homePage {
+    display: flex;
+    overflow-y: auto;
+}
+
+.card {
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background: white;
+    display: inline-block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 18rem;
+}
+
+.cardImage {
+    height: 5rem;
+}
+
+.studentData {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 500;
+    color: black;
 }

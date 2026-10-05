@@ -13,9 +13,3 @@
     padding: 0 0.3rem;
     display: inline-block;
 }
-
-@font-face {
-    font-family: myFirstFont;
-    src: url('../../../assets/HARRP___.TTF');
-
-}

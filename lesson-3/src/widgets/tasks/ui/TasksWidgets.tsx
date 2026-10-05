@@ -3,8 +3,7 @@ import { TasksList } from "features/tasksList";
 import { useTasks, type Filter } from "features/tasksList/model/useTasks";
 import React from "react";
 
-type Props = {
-    tasks: Task[],
+export type TasksWidgetProps = {
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     filter: Filter,
     removingId: string,
@@ -12,16 +11,15 @@ type Props = {
 };
 
 export const TasksWidget = React.memo(function TasksWidget({
-    tasks,
     setTasks,
     filter,
     removingId,
     setRemovingId
-}: Props) {
-    const { tasksRes } = useTasks(tasks,
-        setTasks,
+}: TasksWidgetProps) {
+    const { tasksRes } = useTasks(setTasks,
         filter,
-        removingId, setRemovingId);
+        removingId,
+        setRemovingId);
 
     return <TasksList tasks={tasksRes} />;
 });
