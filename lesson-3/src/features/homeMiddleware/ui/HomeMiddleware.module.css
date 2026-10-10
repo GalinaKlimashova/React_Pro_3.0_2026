@@ -1,0 +1,10 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('../../../assets/HARRP___.TTF');
+
+}
+
+.generalSettings {
+    font-family: myFirstFont !important;
+    color: black;
+}

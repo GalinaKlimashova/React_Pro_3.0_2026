@@ -1,5 +1,5 @@
 import { HomeMiddleware } from 'features/homeMiddleware';
-import styles from "./App.module.css";
+import styles from './App.module.css';
 
 function App() {
   return (

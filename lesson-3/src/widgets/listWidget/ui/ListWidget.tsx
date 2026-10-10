@@ -1,5 +1,5 @@
 import type { Task } from 'entities/task';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { removeBtnTitle, selectSubTitle } from 'shared/Initialdata/constants';
 import { FilterButton } from 'shared/ui/FilterButton/FilterButton';
 import styles from "./ListWidget.module.css";
@@ -12,15 +12,17 @@ type Props = {
 export const ListWidget = React.memo(function ListWidget({ tasks, setRemovingId }: Props) {
     const [selectedValue, setSelectedValue] = useState<string>();
 
+    useEffect(() => {
+        setSelectedValue(tasks[0].id || "");
+    }, [tasks]);
+
     const handleSelectChange = (event: React.ChangeEvent<HTMLFormElement>) => {
         setSelectedValue(event.target.value);
     };
 
     const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const result = tasks.filter((task) => task.id !== selectedValue) || [];
         setRemovingId(selectedValue || "");
-        setSelectedValue(result[0].id || "");
     };
 
     return (
