@@ -1,9 +1,33 @@
-import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RenderCounter } from "@shared/ui";
-import { groupRegistrationSchema, defaultValues } from "../model";
+import {
+  buttonSubmitTitle,
+  submitButtonType,
+  confirmationPasswordLabel,
+  confirmationPasswordPlaceholder,
+  confirmPasswordField,
+  emailField,
+  emailLabel,
+  emailPlaceholder,
+  linkAddBtn,
+  linkDeleteBtn,
+  linkPlaceholder,
+  linksArray,
+  linksSubLabel,
+  passwordField,
+  passwordLabel,
+  passwordPlaceholder,
+  socialLinksLabel,
+  submitMsg,
+  usernameField,
+  usernameLabel,
+  usernamePlaseholder
+} from "@shared/constants";
+import { useFieldArray, useForm } from "react-hook-form";
+import styles from "@shared/css-files/GeneralStylesForm.module.css";
 import type { GroupRegistrationValues } from "../model";
-import styles from "./RhfForm.module.css";
+import { defaultValues, groupRegistrationSchema } from "../model";
+import { getArrayNode } from "./getArrayNode";
+import { getInfoNode } from "./getInfoNode";
 
 export const RhfForm = () => {
   const {
@@ -17,103 +41,74 @@ export const RhfForm = () => {
     mode: "onTouched",
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "passengers",
-  });
+  const { fields: linksFields,
+    append: appendLink,
+    remove: removeLink } = useFieldArray({
+      control,
+      name: linksArray
+    });
 
   const onSubmit = (values: GroupRegistrationValues) => {
     alert(JSON.stringify(values, null, 2));
+    console.log(`${submitMsg}`, values);
   };
 
   return (
     <div>
-      {/* <RenderCounter name="React Hook Form" /> */}
-
       <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
-        <div className={styles.fieldGroup}>
-          <label className={styles.label}>Название группы пассажиров</label>
-          <input
-            {...register("groupName")}
-            className={`${styles.input} ${touchedFields.groupName && errors.groupName ? styles.inputError : ""}`}
-            placeholder="Например: Сборная по футболу"
-          />
-          {errors.groupName && (
-            <div className={styles.errorText}>{errors.groupName.message}</div>
-          )}
-        </div>
+        {/* username */}
+        {getInfoNode({
+          register,
+          registerName: usernameField,
+          currentLabel: usernameLabel,
+          errors: errors[usernameField],
+          touchedFields: touchedFields[usernameField],
+          placeholder: usernamePlaseholder
+        })}
+        {/* email */}
+        {getInfoNode({
+          register,
+          registerName: emailField,
+          currentLabel: emailLabel,
+          errors: errors[emailField],
+          touchedFields: touchedFields[emailField],
+          placeholder: emailPlaceholder
+        })}
+        {/* password */}
+        {getInfoNode({
+          register,
+          registerName: passwordField,
+          currentLabel: passwordLabel,
+          errors: errors[passwordField],
+          touchedFields: touchedFields[passwordField],
+          placeholder: passwordPlaceholder
+        })}
+        {/* confirmationPassword */}
+        {getInfoNode({
+          register,
+          registerName: confirmPasswordField,
+          currentLabel: confirmationPasswordLabel,
+          errors: errors[confirmPasswordField],
+          touchedFields: touchedFields[confirmPasswordField],
+          placeholder: confirmationPasswordPlaceholder
+        })}
+        {/* social links block */}
+        {getArrayNode({
+          register,
+          currentLabel: socialLinksLabel,
+          currentSubLabel: linksSubLabel,
+          placeholder: linkPlaceholder,
+          linksFields,
+          errors,
+          labelDeleteBtn: linkDeleteBtn,
+          removeLink,
+          labelAddBtn: linkAddBtn,
+          appendLink
+        })}
 
-        <div className={styles.fieldGroup}>
-          <label className={styles.label}>Контактный Email руководителя</label>
-          <input
-            type="email"
-            {...register("contactEmail")}
-            className={`${styles.input} ${touchedFields.contactEmail && errors.contactEmail ? styles.inputError : ""}`}
-            placeholder="manager@example.com"
-          />
-          {errors.contactEmail && (
-            <div className={styles.errorText}>
-              {errors.contactEmail.message}
-            </div>
-          )}
-        </div>
-
-        <div className={styles.arrayContainer}>
-          <h3>Список пассажиров</h3>
-
-          <div>
-            {fields.map((field, index) => (
-              <div key={field.id} className={styles.arrayRow}>
-                <div className={`${styles.fieldGroup} ${styles.flexChild}`}>
-                  <label className={styles.label}>Имя №{index + 1}</label>
-                  <input
-                    {...register(`passengers.${index}.firstName`)}
-                    className={`${styles.input} ${errors.passengers?.[index]?.firstName ? styles.inputError : ""}`}
-                  />
-                  {errors.passengers?.[index]?.firstName && (
-                    <div className={styles.errorText}>
-                      {errors.passengers[index]?.firstName?.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className={`${styles.fieldGroup} ${styles.flexChild}`}>
-                  <label className={styles.label}>Фамилия №{index + 1}</label>
-                  <input
-                    {...register(`passengers.${index}.lastName`)}
-                    className={`${styles.input} ${errors.passengers?.[index]?.lastName ? styles.inputError : ""}`}
-                  />
-                  {errors.passengers?.[index]?.lastName && (
-                    <div className={styles.errorText}>
-                      {errors.passengers[index]?.lastName?.message}
-                    </div>
-                  )}
-                </div>
-
-                {fields.length > 1 && (
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => remove(index)}
-                  >
-                    Удалить
-                  </button>
-                )}
-              </div>
-            ))}
-
-            <button
-              type="button"
-              className={styles.addBtn}
-              onClick={() => append({ firstName: "", lastName: "" })}
-            >
-              + Добавить пассажира
-            </button>
-          </div>
-        </div>
-
-        <button type="submit" className={styles.submitBtn}>
-          Забронировать
+        <button type={submitButtonType}
+          className={styles.submitBtn}>
+          {buttonSubmitTitle}
         </button>
       </form>
     </div>

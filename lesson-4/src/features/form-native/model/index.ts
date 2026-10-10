@@ -1,2 +1,11 @@
-export {  initialFormState, submitFormAction } from "./form.actions";
-export type { schema, FormState } from "./form.types";
+export {
+    initialFormState,
+    submitFormAction
+} from "./formActions";
+export type {
+    schema,
+    FormState,
+    FormFieldsType,
+    InfoNodeType,
+    MiddlewareStepType
+} from "./formTypes";
