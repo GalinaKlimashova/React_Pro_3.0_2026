@@ -1,0 +1,38 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('../../../assets/HARRP___.TTF');
+
+}
+
+.titleBlock {
+    display: flex;
+}
+
+.gerbBlock {
+    display: flex;
+    align-items: center;
+}
+
+.gerb {
+    height: 9rem;
+    padding: 0.2rem;
+    display: flex;
+}
+
+.title {
+    font-family: myFirstFont !important;
+    color: black;
+    line-height: 3rem;
+}
+
+.subTitle {
+    font-family: myFirstFont !important;
+    color: #FDDA0D;
+    line-height: 0.2rem;
+    font-size: 2rem;
+    display: flex;
+}
+
+.subTitleBlock {
+    display: flex;
+}
