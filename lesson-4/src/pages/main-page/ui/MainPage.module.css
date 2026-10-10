@@ -1,0 +1,17 @@
+.pageWrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: sans-serif;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.formContainer {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  min-height: 200px;
+}
