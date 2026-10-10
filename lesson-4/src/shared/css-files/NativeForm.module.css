@@ -1,19 +1,7 @@
 .container {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 32px;
   background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.title {
-  margin: 0 0 24px 0;
-  font-size: 22px;
-  font-weight: 600;
-  color: #1a1a1a;
-  text-align: center;
 }
 
 .form {
@@ -35,6 +23,7 @@
 }
 
 .input {
+  margin-bottom: 1rem;
   padding: 12px 14px;
   font-size: 15px;
   border: 1px solid #e0e0e0;
@@ -72,7 +61,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #ffffff;
-  background-color: #4f46e5;
+  background: rgb(16, 52, 158);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -80,12 +69,28 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: #4338ca;
+  background: rgb(16, 52, 158, 0.7);
 }
 
 .submitBtn:disabled {
   background-color: #a5b4fc;
   cursor: not-allowed;
+}
+
+.backBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 46px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgb(162, 161, 161);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .statusMessage {
@@ -119,10 +124,31 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.successScreenImg {
+  height: 10rem;
+}
+
+.elemSettings {
+  display: flex;
+}
+
+.msgContainer {
+  margin: 2rem 0;
 }

@@ -14,10 +14,6 @@ import {
   usernameLabel,
   usernamePlaseholder
 } from "@shared/constants";
-import styles from "@shared/css-files/NativeForm.module.css";
-import { getCongratulation } from "@shared/utils/getCongratulation";
-import { getFinalStep } from "@shared/utils/getFinalStep";
-import { getMiddlewareStep } from "@shared/utils/getMiddlwareStep";
 import {
   useActionState,
   useEffect,
@@ -28,8 +24,12 @@ import {
   submitFormAction,
   type MiddlewareStepType
 } from "../model";
+import styles from "@shared/css-files/NativeForm.module.css";
+import { getMiddlewareStep } from "@shared/utils/getMiddlwareStep";
+import { getFinalStep } from "@shared/utils/getFinalStep";
+import { getCongratulation } from "@shared/utils/getCongratulation";
 
-export const NativeForm = () => {
+export const NativeFormYup = () => {
   const [step, setStep] = useState<number>(START_STEP_NUMBER);
   const [email, setEmail] = useState('');
   const [currentUserName, setCurrentUserName] = useState('');
@@ -50,6 +50,7 @@ export const NativeForm = () => {
       });
     }
   }, [state]);
+
 
   // я понимаю, что так не делается, но писать функцию, 
   // чтобы получить объект, мне стало лень

@@ -1,32 +1,42 @@
+import {
+  confirmPasswordErrorMsg,
+  confirmPasswordWarningMsg,
+  emailErrorMsg,
+  linkUrlErrorMsg,
+  passwordErrorMsg,
+  passwordMinLength,
+  usernameErrorMsg,
+  userNameMinLength
+} from "@shared/constants";
 import { z } from "zod";
 
-export const passengerSchema = z.object({
-  firstName: z
-    .string()
-    .min(1, "Имя обязательно")
-    .regex(/^[\p{L}\s-]+$/u, {
-      message: "Имя должно содержать только буквы",
-    }),
-  lastName: z
-    .string()
-    .min(1, "Фамилия обязательна")
-    .regex(/^[\p{L}\s-]+$/u, {
-      message: "Фамилия должна содержать только буквы",
-    }),
+export const linkSchema = z.object({
+  link: z.string()
+    .url(linkUrlErrorMsg)
 });
 
 export const groupRegistrationSchema = z.object({
-  groupName: z.string().min(3, "Название должно быть не менее 3 символов"),
-  contactEmail: z.email({ message: "Некорректный формат email" }),
-  passengers: z
-    .array(passengerSchema)
-    .min(1, "Должен быть минимум один пассажир"),
+  username: z.string().min(userNameMinLength, usernameErrorMsg),
+  contactEmail: z.email({ message: emailErrorMsg }),
+  passwordField: z.string()
+    .min(passwordMinLength, passwordErrorMsg),
+  confirmPassword: z.string()
+    .min(passwordMinLength, confirmPasswordWarningMsg),
+  linksArray: z.array(linkSchema)
+  // don’t want to do
+  // .min(1, linkArrayMinLengthMsg)
+}).refine((data) => data.passwordField === data.confirmPassword, {
+  message: confirmPasswordErrorMsg,
+  path: ['confirmPassword'],
 });
 
-export type GroupRegistrationValues = z.infer<typeof groupRegistrationSchema>;
+export type GroupRegistrationValues
+  = z.infer<typeof groupRegistrationSchema>;
 
 export const defaultValues: GroupRegistrationValues = {
-  groupName: "",
+  username: "",
   contactEmail: "",
-  passengers: [{ firstName: "", lastName: "" }],
+  passwordField: "",
+  confirmPassword: "",
+  linksArray: [{ link: "" }]
 };
