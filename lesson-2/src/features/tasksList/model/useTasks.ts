@@ -1,5 +1,5 @@
 import type { Task } from "entities/task";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { allStr, completedStr } from "shared/Initialdata/constants";
 
 export type Filter = 'all' | 'completed' | 'incomplete';
@@ -23,6 +23,10 @@ export function useTasks(
         }
     }
 
+    const setFilterWithUseMemo = useMemo(() => (newFilter: Filter, updatedTasks: Task[]) => {
+        return setFilter(newFilter, updatedTasks);
+    }, []);
+
     async function removeTask(id: string, updatedTasks: Task[]) {
         const upadetTaskList = updatedTasks.filter((task: Task) => {
             return task.id !== id;
@@ -32,16 +36,27 @@ export function useTasks(
         setTasksFilter(upadetTaskList);
     }
 
+    const removeTaskWithUseCallback = useCallback((id: string, updatedTasks: Task[]) => {
+        return removeTask(id, updatedTasks);
+    }, []);
+
     useEffect(() => {
         Promise.resolve().then(() => {
-            setFilter(filter, tasksFilter);
+            // with useCallback()
+            setFilterWithUseMemo(filter, tasksFilter);
+
+            //without useCallback()
+            // setFilter(filter, tasksFilter);
         });
     }, [filter, tasksFilter]);
 
     useEffect(() => {
         if (removingId) {
             Promise.resolve().then(() => {
-                removeTask(removingId, tasksRes);
+                // with useCallback()
+                removeTaskWithUseCallback(removingId, tasksRes);
+                // without useCallback()
+                // removeTask(removingId, tasksRes);
             });
         }
     }, [removingId]);
