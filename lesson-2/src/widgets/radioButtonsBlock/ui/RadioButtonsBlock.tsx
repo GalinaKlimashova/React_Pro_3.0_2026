@@ -3,6 +3,7 @@ import { useState } from "react";
 import { allStr, completedStr, filterBtnTitle, incompleteStr } from "shared/Initialdata/constants";
 import { FilterButton } from "../../../shared/ui/FilterButton/FilterButton";
 import styles from "./RadioButtonsBlock.module.css";
+import React from "react";
 
 const radioButtonsBlock = "radioButtonsBlock";
 const radioType = "radio";
@@ -13,7 +14,7 @@ type Props = {
     setFilter: React.Dispatch<React.SetStateAction<Filter>>
 }
 
-export function RadioButtonsBlock({ filter, setFilter }: Props) {
+export const RadioButtonsBlock = React.memo(function RadioButtonsBlock({ filter, setFilter }: Props) {
     const [selectedValue, setSelectedValue] = useState<string>(filter);
 
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,4 +68,4 @@ export function RadioButtonsBlock({ filter, setFilter }: Props) {
             </form>
         </div>
     );
-};
+});
