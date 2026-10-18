@@ -18,6 +18,7 @@ export const buttonSubmitTitle = "Перейти к регистрации на 
 
 export const nextButton = "Далее";
 export const backButton = "Назад";
+export const submitButton = "Подтверждаю, находясь в здравом уме и трезвой памяти";
 export const submitMsg = "Введённые данные:";
 
 // =============== username ===============

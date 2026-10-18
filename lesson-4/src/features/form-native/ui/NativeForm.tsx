@@ -9,6 +9,7 @@ import {
   MAX_STEPS_COUNT,
   nextButton,
   START_STEP_NUMBER,
+  submitButton,
   submitButtonType,
   usernameField,
   usernameLabel,
@@ -83,22 +84,39 @@ export const NativeForm = () => {
       <form action={formAction} className={styles.form}>
         {/* шаг, таких шагов может быть много */}
         {step === START_STEP_NUMBER
-          ? getMiddlewareStep(firstStepContent)
+          ? <>
+            {getMiddlewareStep(firstStepContent)}
+            <button
+              type={submitButtonType}
+              disabled={isPending}
+              onClick={() => {
+                if (state.success) {
+                  updateCurrentStep();
+                }
+              }}
+              className={`${styles.submitBtn} ${styles.nextBtn}`}>
+              {nextButton}
+            </button></>
           : <></>
         }
+
         {/* предпоследний шаг */}
         {step === (MAX_STEPS_COUNT - 1)
-          ? getFinalStep({
+          ? <>{getFinalStep({
             username: currentUserName,
             contactEmail: email
-          })
-          : <></>}
-        {/* финальное заключение */}
-        {step === MAX_STEPS_COUNT && state.success
-          ? getCongratulation({
-            username: currentUserName,
-            contactEmail: email
-          })
+          })}
+            <button
+              type={linkButtonType}
+              onClick={async () => {
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                updateCurrentStep();
+              }}
+              disabled={isPending}
+              className={styles.submitBtn}>
+              {submitButton}
+            </button>
+          </>
           : <></>}
 
         {step > START_STEP_NUMBER
@@ -114,24 +132,25 @@ export const NativeForm = () => {
             {backButton}
           </button>
           : <></>}
-        {/* Кнопка отправки */}
-        {step !== MAX_STEPS_COUNT
-          ? <button
-            type={submitButtonType}
-            disabled={isPending}
-            className={styles.submitBtn}>
-            {isPending
-              ? <span className={styles.spinner}></span>
-              : nextButton}
-          </button>
+
+        {/* финальное заключение */}
+        {step === MAX_STEPS_COUNT && state.success
+          ? <>{getCongratulation({
+            username: currentUserName,
+            contactEmail: email
+          })}
+            {/* Общий статус ответа от сервера */}
+            {state.message && !isPending && (
+              <div className={`${styles.statusMessage} ${state.success ? styles.success : styles.error}`}>
+                {state.message}
+              </div>
+            )}
+          </>
           : <></>}
 
-        {/* Общий статус ответа от сервера */}
-        {state.message && !isPending && (
-          <div className={`${styles.statusMessage} ${state.success ? styles.success : styles.error}`}>
-            {state.message}
-          </div>
-        )}
+
+
+
       </form>
     </div >
   );
