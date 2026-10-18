@@ -24,7 +24,6 @@
 }
 
 .statusRow {
-  display: flex;
   justify-content: space-between;
   font-size: 0.875rem;
 }
@@ -32,15 +31,5 @@
 .indicator {
   font-weight: 700;
   color: var(--color-primary);
-}
-
-.logBox {
-  font-family: 'Azeret Mono', monospace;
-  font-size: 0.75rem;
-  background: #1e293b;
-  color: #e2e8f0;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  max-height: 150px;
-  overflow-y: auto;
+  margin-left: 0.5rem;
 }

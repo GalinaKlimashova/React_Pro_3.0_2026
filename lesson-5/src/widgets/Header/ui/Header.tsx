@@ -3,21 +3,21 @@ import styles from './Header.module.css';
 
 export const Header = () => {
   const navItems = [
-    { to: '/click-tracker', label: '1. Click Tracker'},
-    { to: '/previous-value', label: '2. Prev Value'},
-    { to: '/input-focus', label: '3. Input Focus'},
-    { to: '/search-delay', label: '4. Debounce'},
-    { to: '/chat-connection', label: '5. External (WS)'},
+    { to: '/click-timer', label: '1/3 Click Timer' },
+    { to: '/previous-input', label: '2/3 Previous Input' },
+    { to: '/focus-tracker', label: '3/3 Focus Tracker' },
+    { to: '/debounced-logger', label: 'Debounce Logger (доп)' },
+    { to: '/web-socket-logger', label: 'WebSocket Logger (доп)' },
   ];
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <span>useRef</span>
+          <span>lesson-5: useRef</span>
         </div>
         <nav className={styles.nav}>
-          {navItems.map(({ to, label}) => (
+          {navItems.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
