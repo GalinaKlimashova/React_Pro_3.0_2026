@@ -1,21 +1,33 @@
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import * as Yup from "yup";
-import styles from "./FormikForm.module.css";
-import { RenderCounter } from "@shared/ui";
-
-const dynamicValidationSchema = Yup.object({
-  groupName: Yup.string()
-    .min(3, "Название должно быть не менее 3 символов")
-    .required("Обязательное поле"),
-  contactEmail: Yup.string()
-    .email("Некорректный формат email")
-    .required("Обязательное поле"),
-});
-
-const initialValues = {
-  groupName: "",
-  contactEmail: "",
-};
+import { Form, Formik } from "formik";
+import {
+  buttonSubmitTitle,
+  submitButtonType,
+  confirmationPasswordLabel,
+  confirmationPasswordPlaceholder,
+  confirmPasswordField,
+  emailField, emailLabel,
+  emailPlaceholder,
+  emailType,
+  linkAddBtn,
+  linkButtonType,
+  linkDeleteBtn,
+  linkPlaceholder,
+  linksArray,
+  linksSubLabel,
+  passwordField,
+  passwordLabel,
+  passwordPlaceholder,
+  passwordType,
+  socialLinksLabel,
+  submitMsg,
+  usernameField,
+  usernameLabel,
+  usernamePlaseholder
+} from "@shared/constants";
+import styles from "@shared/css-files/GeneralStylesForm.module.css";
+import { getArrayNode } from "./getArrayNode";
+import { getInfoNode } from "./getInfoNode";
+import { dynamicValidationSchema, initialValues } from "../model";
 
 export const FormikForm = () => {
   return (
@@ -25,46 +37,57 @@ export const FormikForm = () => {
         validationSchema={dynamicValidationSchema}
         onSubmit={(values) => {
           alert(JSON.stringify(values, null, 2));
+          console.log(`${submitMsg}`, values);
         }}
       >
         {(formikProps) => {
           return (
             <Form className={styles.formWrapper}>
-              {/* <RenderCounter name="Formik" /> */}
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>
-                  Название группы пассажиров
-                </label>
-                <Field
-                  name="groupName"
-                  className={`${styles.input} ${formikProps.touched.groupName && formikProps.errors.groupName ? styles.inputError : ""}`}
-                  placeholder="Например: Сборная по футболу"
-                />
-                <ErrorMessage
-                  name="groupName"
-                  component="div"
-                  className={styles.errorText}
-                />
-              </div>
+              {/* username */}
+              {getInfoNode({
+                currentLabel: usernameLabel,
+                currentField: usernameField,
+                currentPlaceholder: usernamePlaseholder,
+                formikProps
+              })}
+              {/* email */}
+              {getInfoNode({
+                currentLabel: emailLabel,
+                currentField: emailField,
+                currentPlaceholder: emailPlaceholder,
+                currentType: emailType,
+                formikProps
+              })}
+              {/* password */}
+              {getInfoNode({
+                currentLabel: passwordLabel,
+                currentField: passwordField,
+                currentPlaceholder: passwordPlaceholder,
+                currentType: passwordType,
+                formikProps
+              })}
+              {/* confirmationPassword */}
+              {getInfoNode({
+                currentLabel: confirmationPasswordLabel,
+                currentField: confirmPasswordField,
+                currentPlaceholder: confirmationPasswordPlaceholder,
+                currentType: passwordType,
+                formikProps
+              })}
+              {/* social links block */}
+              {getArrayNode({
+                arrayNodeName: linksArray,
+                label: socialLinksLabel,
+                subLabel: linksSubLabel,
+                buttonType: linkButtonType,
+                removeBtnTitle: linkDeleteBtn,
+                addBtnTitle: linkAddBtn,
+                fieldsPlaceholder: linkPlaceholder
+              })}
 
-              <div className={styles.fieldGroup}>
-                <label className={styles.label}>
-                  Контактный Email руководителя
-                </label>
-                <Field
-                  name="contactEmail"
-                  type="email"
-                  className={`${styles.input} ${formikProps.touched.contactEmail && formikProps.errors.contactEmail ? styles.inputError : ""}`}
-                  placeholder="manager@example.com"
-                />
-                <ErrorMessage
-                  name="contactEmail"
-                  component="div"
-                  className={styles.errorText}
-                />
-              </div>
-              <button type="submit" className={styles.submitBtn}>
-                Забронировать
+              <button type={submitButtonType}
+                className={styles.submitBtn}>
+                {buttonSubmitTitle}
               </button>
             </Form>
           );
