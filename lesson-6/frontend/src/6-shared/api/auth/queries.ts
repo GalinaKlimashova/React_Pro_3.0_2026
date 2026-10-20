@@ -1,5 +1,5 @@
 import { api } from '../base';
-import type { SignInRequest, SignUpRequest, SignResponse } from './types';
+import type { SignInRequest, SignUpRequest, SignResponse, UserMeResponse } from './types';
 
 const authApi = api.extend((options) => ({ prefixUrl: `${options.prefixUrl}/auth` }));
 
@@ -15,4 +15,9 @@ export const signIn = (params: SignInRequest) =>
         .post<SignResponse>('login', {
             json: params,
         })
+        .json();
+
+export const getUserMe = () =>
+    api
+        .get<UserMeResponse>('users/me')
         .json();

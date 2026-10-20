@@ -27,3 +27,11 @@ export interface SignResponseError {
 }
 
 export type SignResponse = SignResponseSuccess | SignResponseError;
+
+export interface UserMeResponse {
+    user: {
+        id: string;
+        email: string;
+        name?: string;
+    };
+}

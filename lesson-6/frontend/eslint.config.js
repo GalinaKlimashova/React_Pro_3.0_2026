@@ -5,7 +5,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import fsdEslintConfig from '@zh2s/eslint-config-fsd';
+// import fsdEslintConfig from '@zh2s/eslint-config-fsd';
 import globals from 'globals';
 
 export default defineConfig([
@@ -14,7 +14,7 @@ export default defineConfig([
     reactPlugin.configs.flat.recommended,
     reactPlugin.configs.flat['jsx-runtime'],
     reactHooks.configs.flat.recommended,
-    fsdEslintConfig.flatConfig,
+    // fsdEslintConfig.flatConfig,
     eslintPluginPrettierRecommended,
     eslintConfigPrettier,
     {
