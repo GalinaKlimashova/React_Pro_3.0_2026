@@ -16,7 +16,7 @@ export const getFinalStep = ({
     contactEmail }: FormFieldsType): ReactNode => {
 
     const screenMsg =
-        <><strong>{username}</strong>, {confirmStr} <strong>{contactEmail}</strong>?</>;
+        <><strong>{username.length ? username : "-"}</strong>, {confirmStr} <strong>{contactEmail.length ? contactEmail : "-"}</strong>?</>;
 
     return <div className={styles.msgContainer}>
         <p><strong>{confirmStepTitle}</strong></p>

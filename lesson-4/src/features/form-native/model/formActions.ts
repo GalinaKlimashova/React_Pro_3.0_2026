@@ -23,11 +23,8 @@ export async function submitFormAction(
   prevState: FormState,
   formData: FormData): Promise<FormState> {
 
-  console.log("prevState: ", prevState);
-  // Искусственная задержка сети (2 секунды)
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  console.log(prevState);
 
-  // Получаем сырые данные из нативной FormData
   const rawData = {
     username: formData.get(usernameField),
     contactEmail: formData.get(emailField),

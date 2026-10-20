@@ -1,20 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { Card, Input } from "@shared/ui";
-import styles from "./SearchDelayPage.module.css";
+import styles from "./DebouncedLogger.module.css";
 
-export const SearchDelayPage = () => {
+export const DebouncedLogger = () => {
   const [query, setQuery] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [logs, setLogs] = useState<string[]>([]);
 
   const timerRef = useRef<number | null>(null);
-
-  const addLog = (msg: string) => {
-    setLogs((prev) =>
-      [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev],
-    );
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -28,9 +21,9 @@ export const SearchDelayPage = () => {
     timerRef.current = setTimeout(() => {
       setIsTyping(false);
       if (value) {
-        addLog(`API: Поиск по "${value}"...`);
+        console.log(value);
       }
-    }, 500);
+    }, 1000);
   };
 
   //Важно!
@@ -41,11 +34,12 @@ export const SearchDelayPage = () => {
   }, []);
 
   return (
-    <Card title="Кейс 4: Управление таймерами" subtitle="Debounce">
+    <Card title="4. Компонент DebouncedLogger с useRef (1.5 балла)"
+      subtitle="Debounce">
       <div className={styles.container}>
         <div className={styles.searchBox}>
           <Input
-            label="Живой поиск"
+            label="Поле ввода"
             value={query}
             onChange={handleChange}
             placeholder="Начните печатать..."
@@ -55,15 +49,9 @@ export const SearchDelayPage = () => {
             <div className={styles.statusRow}>
               <span>Статус:</span>
               <span className={styles.indicator}>
-                {isTyping ? "Набор текста..." : "Готов"}
+                {isTyping ? "Набор текста..." : "Готов (result in DevTools.Console)"}
               </span>
             </div>
-          </div>
-
-          <div className={styles.logBox}>
-            {logs.length === 0
-              ? "> Логи API запросов появятся здесь"
-              : logs.map((log, i) => <div key={i}>{log}</div>)}
           </div>
         </div>
       </div>

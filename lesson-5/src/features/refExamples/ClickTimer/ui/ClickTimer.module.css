@@ -1,0 +1,20 @@
+.controls {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.renderBadge {
+  display: inline-block;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.timestamp {
+  margin-bottom: 0.25rem;
+}

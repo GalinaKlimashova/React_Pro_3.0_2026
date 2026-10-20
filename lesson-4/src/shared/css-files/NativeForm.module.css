@@ -68,6 +68,10 @@
   transition: background-color 0.2s ease;
 }
 
+.nextBtn {
+  background: rgb(70, 113, 243);
+}
+
 .submitBtn:hover:not(:disabled) {
   background: rgb(16, 52, 158, 0.7);
 }

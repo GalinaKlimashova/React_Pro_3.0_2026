@@ -1,22 +1,22 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import { ClickTrackerPage } from '@/pages/ClickTrackerPage';
-import { PreviousValuePage } from '@pages/PreviousValuePage';
-import { InputFocusPage } from '@pages/InputFocusPage';
-import { SearchDelayPage } from '@pages/SearchDelayPage';
-import { ChatConnectionPage } from '@pages/ChatConnectionPage';
+import { WebSocketLogger } from '@/features/refExamples/WebSocketLogger';
 import { AppLayout } from '../App';
+import { ClickTimer } from '@/features/refExamples/ClickTimer';
+import { PreviousInput } from '@/features/refExamples/PreviousInput/index';
+import { FocusTracker } from '@/features/refExamples/FocusTracker';
+import { DebouncedLogger } from '@/features/refExamples/DebouncedLogger';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
     children: [
-      { index: true, element: <Navigate to="/click-tracker" replace /> },
-      { path: 'click-tracker', element: <ClickTrackerPage /> },
-      { path: 'previous-value', element: <PreviousValuePage /> },
-      { path: 'input-focus', element: <InputFocusPage /> },
-      { path: 'search-delay', element: <SearchDelayPage /> },
-      { path: 'chat-connection', element: <ChatConnectionPage /> },
+      { index: true, element: <Navigate to="/click-timer" replace /> },
+      { path: 'click-timer', element: <ClickTimer /> },
+      { path: 'previous-input', element: <PreviousInput /> },
+      { path: 'focus-tracker', element: <FocusTracker /> },
+      { path: 'debounced-logger', element: <DebouncedLogger /> },
+      { path: 'web-socket-logger', element: <WebSocketLogger /> },
     ],
   },
 ]);
