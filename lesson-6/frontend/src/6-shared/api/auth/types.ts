@@ -1,6 +1,6 @@
 export interface SignUpRequest {
     email: string;
-    name: string;
+    name?: string;
     password: string;
     avatarPath?: string;
     about?: string;
@@ -16,6 +16,13 @@ export interface SignResponseSuccess {
     user: {
         id: string;
         email: string;
+        name?: string;
+        about?: string;
+        avatarPath?: string;
+        favoritesPost?: string[];
+        likes?: string[];
+        phone?: string;
+        roles?: ['USER'];
     };
     accessToken: string;
 }
@@ -27,3 +34,18 @@ export interface SignResponseError {
 }
 
 export type SignResponse = SignResponseSuccess | SignResponseError;
+
+export interface UserMeResponse {
+    user: {
+        id: string;
+        email: string;
+
+        name?: string;
+        about?: string;
+        avatarPath?: string;
+        favoritesPost?: string[];
+        likes?: string[];
+        phone?: string;
+        roles?: ['USER'];
+    };
+}

@@ -1,4 +1,5 @@
 export interface HeaderLink {
-    href: `/${string}`;
+    href?: `/${string}`;
     title: string;
+    isLogout?: boolean;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { UseAuthStrategy } from '../model/auth';
+import type { UseAuthStrategy } from '../model-auth/auth';
 import { useAuthContext } from './authContext';
 
 export const useContextAuthStrategy: UseAuthStrategy = () => {

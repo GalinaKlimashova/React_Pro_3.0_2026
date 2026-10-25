@@ -1,11 +1,12 @@
 import { createContext, useContext } from 'react';
-import type { AuthContextModel } from '../model/auth';
+import type { AuthContextModel } from '../model-auth/auth';
 
 export const AuthContext = createContext<AuthContextModel>({
     accessToken: '',
     refreshToken: '',
     userId: '',
     name: '',
+    isAuthenticated: false,
     login: () => {},
     logout: () => {},
 });

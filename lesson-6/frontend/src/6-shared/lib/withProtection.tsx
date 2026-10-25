@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from '@mui/material';
 import type { ComponentType } from 'react';
 import { Navigate, useLocation } from 'react-router';
-import type { UseAuthStrategy } from '6-shared/model/auth';
+import type { UseAuthStrategy } from '6-shared/model-auth/auth';
 
 export const withProtection = <P extends object>(
     WrappedComponent: ComponentType<P>,

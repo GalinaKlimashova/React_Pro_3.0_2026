@@ -1,23 +1,7 @@
-import { Box, Container } from '@mui/material';
-import { Outlet } from 'react-router';
-import { Header } from '3-widgets/Header';
-import { withProviders } from './providers';
+import { AppRouter } from '4-features/ authRouting/7-AppRouter';
 
-export const App = withProviders(() => {
-    return (
-        <>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: '100vh',
-                }}
-            >
-                <Header />
-                <Container maxWidth="lg" sx={{ py: 8 }}>
-                    <Outlet />
-                </Container>
-            </Box>
-        </>
-    );
-});
+function App() {
+    return <AppRouter />;
+}
+
+export default App;
