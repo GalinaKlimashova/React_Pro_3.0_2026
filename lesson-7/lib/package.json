@@ -1,0 +1,70 @@
+{
+  "name": "@zh2s/react-utils",
+  "version": "1.0.9",
+  "description": "Сборник полезных утилит, хуков, HOCов для реакта!",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "./build/"
+  ],
+  "scripts": {
+    "build": "tsc && ts-node ./esbuild.ts",
+    "fix:eslint": "eslint --fix --max-warnings 0",
+    "fix:prettier": "prettier --ignore-path .gitignore --write",
+    "fix:stylelint": "stylelint --fix",
+    "fix:eslint:all": "npm run fix:eslint -- ./src",
+    "fix:prettier:all": "npm run fix:prettier -- \"./src/**/*.{ts,tsx,scss,sass,css,md,mdx}\"",
+    "fix:stylelint:all": "npm run fix:stylelint -- \"./src/**/*.{scss,sass,css}\"",
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run fix:eslint --"
+    ],
+    "src/**/*.{ts,tsx,scss,sass,css,md,mdx}": [
+      "npm run fix:prettier --"
+    ],
+    "src/**/*.{scss,sass,css}": [
+      "npm run fix:stylelint --"
+    ]
+  },
+  "keywords": [
+    "React",
+    "lib",
+    "HOCs",
+    "hooks"
+  ],
+  "author": "Zholobov",
+  "license": "MIT",
+  "type": "module",
+  "peerDependencies": {
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1",
+    "react-router": ">=7.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "25.5.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "esbuild": "0.28.1",
+    "eslint": "9.38.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.4",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.0.0",
+    "eslint-plugin-react-refresh": "0.4.24",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.6",
+    "prettier": "3.6.2",
+    "stylelint": "16.25.0",
+    "stylelint-config-recess-order": "7.4.0",
+    "stylelint-config-standard": "39.0.1",
+    "stylelint-config-standard-scss": "16.0.0",
+    "stylelint-order": "7.0.0",
+    "stylelint-prettier": "5.0.3",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.2"
+  }
+}
