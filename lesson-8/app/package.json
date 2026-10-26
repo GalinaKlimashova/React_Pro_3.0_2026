@@ -1,0 +1,79 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "ncu:list": "ncu",
+    "check:bundleSize": "vite build --mode analyze",
+    "ncu:interactive": "ncu -i",
+    "fix:eslint": "eslint --fix --max-warnings 0",
+    "fix:prettier": "prettier --ignore-path .gitignore --write",
+    "fix:stylelint": "stylelint --fix",
+    "fix:eslint:all": "npm run fix:eslint -- ./src",
+    "fix:prettier:all": "npm run fix:prettier -- \"./src/**/*.{ts,tsx,scss,sass,css,md,mdx}\"",
+    "fix:stylelint:all": "npm run fix:stylelint -- \"./src/**/*.{scss,sass,css}\"",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run fix:eslint --"
+    ],
+    "src/**/*.{ts,tsx,scss,sass,css,md,mdx}": [
+      "npm run fix:prettier --"
+    ],
+    "src/**/*.{scss,sass,css}": [
+      "npm run fix:stylelint --"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@hookform/resolvers": "5.2.2",
+    "@mui/icons-material": "7.3.9",
+    "@mui/material": "7.3.9",
+    "@tanstack/react-query": "5.104.5",
+    "@zh2s/react-utils": "1.0.9",
+    "ky": "1.14.3",
+    "react": "19.3.1",
+    "react-day-picker": "10.0.2",
+    "react-dom": "19.3.1",
+    "react-hook-form": "7.90.0",
+    "react-router": "8.5.0",
+    "react-toastify": "11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.4",
+    "@feature-sliced/eslint-config": "0.1.1",
+    "@types/node": "25.4.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@typescript-eslint/eslint-plugin": "8.57.0",
+    "@typescript-eslint/parser": "8.57.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@zh2s/eslint-config-fsd": "1.0.1",
+    "eslint": "9.36.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-boundaries": "7.2.1",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-prettier": "5.5.7",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.7",
+    "globals": "17.13.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.0",
+    "npm-check-updates": "23.1.1",
+    "prettier": "3.9.10",
+    "rollup-plugin-visualizer": "7.1.1",
+    "sass-embedded": "1.106.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.57.0",
+    "vite": "8.3.5"
+  }
+}
