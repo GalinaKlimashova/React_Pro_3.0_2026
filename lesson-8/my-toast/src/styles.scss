@@ -1,0 +1,33 @@
+.myToast {
+    &__container {
+        position: absolute;
+
+        &--top-right {
+            top: 20px;
+            right: 20px;
+        }
+
+        &--top-left {
+            top: 20px;
+            left: 20px;
+        }
+    }
+
+    &__toast {
+        padding: 12px 16px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        background: white;
+        border-radius: 4px;
+
+        &--success {
+            color: white;
+            background: green;
+        }
+
+        &--error {
+            color: white;
+            background: red;
+        }
+    }
+}
