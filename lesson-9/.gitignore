@@ -1,0 +1,44 @@
+# Зависимости
+node_modules/
+
+# Сборка Vite
+/dist
+/.vite
+/build
+
+# Локальные конфигурации окружения
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Логи пакетных менеджеров
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+
+# Тесты и покрытие (если используется)
+coverage/
+.nyc_output/
+
+# Временные и системные файлы
+*.tmp
+*.temp
+Thumbs.db
+
+# Разное
+.DS_Store

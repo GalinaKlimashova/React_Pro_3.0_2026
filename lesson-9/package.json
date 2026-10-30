@@ -1,0 +1,83 @@
+{
+    "name": "app",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "check:bundleSize": "vite-bundle-visualizer -c ./vite.config.js",
+        "check:updates": "npx npm-check-updates",
+        "eslint": "eslint . --max-warnings 0",
+        "fix:eslint": "eslint --fix ./src --max-warnings 0",
+        "fix:prettier": "prettier --ignore-path .gitignore \"./src/**/*.{ts,tsx,scss,sass,css,md,mdx}\" --write",
+        "fix:stylelint": "stylelint --fix \"./src/**/*.{scss,sass,css}\"",
+        "fix:all": "npm run fix:eslint && npm run fix:prettier && npm run fix:stylelint",
+        "preview": "vite preview",
+        "pre-commit": "lint-staged",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "src/**/*.{ts,tsx}": [
+            "npm run fix:eslint"
+        ],
+        "src/**/*.{ts,tsx,scss,sass,css,md,mdx}": [
+            "npm run fix:prettier"
+        ],
+        "src/**/*.{scss,sass,css}": [
+            "npm run fix:stylelint"
+        ]
+    },
+    "dependencies": {
+        "@emotion/react": "11.14.0",
+        "@emotion/styled": "11.14.1",
+        "@hookform/resolvers": "5.7.1",
+        "@mui/icons-material": "9.5.0",
+        "@mui/material": "9.5.0",
+        "@tanstack/react-query": "5.105.0",
+        "@zh2s/react-utils": "1.0.9",
+        "ky": "2.2.0",
+        "react": "19.3.1",
+        "react-day-picker": "10.0.2",
+        "react-dom": "19.3.1",
+        "react-hook-form": "7.91.0",
+        "react-router": "8.5.1",
+        "react-toastify": "11.2.0",
+        "zod": "4.6.7"
+    },
+    "devDependencies": {
+        "@eslint/js": "9.39.4",
+        "@feature-sliced/eslint-config": "0.1.1",
+        "@types/node": "26.6.6",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@typescript-eslint/eslint-plugin": "8.72.1",
+        "@typescript-eslint/parser": "8.72.1",
+        "@vitejs/plugin-react": "6.1.2",
+        "@zh2s/eslint-config-fsd": "1.0.1",
+        "eslint": "9.39.4",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-boundaries": "7.4.0",
+        "eslint-plugin-import": "2.32.0",
+        "eslint-plugin-prettier": "5.5.7",
+        "eslint-plugin-react": "7.37.5",
+        "eslint-plugin-react-hooks": "7.1.1",
+        "eslint-plugin-react-refresh": "0.5.3",
+        "globals": "17.13.0",
+        "husky": "9.1.7",
+        "lint-staged": "17.6.0",
+        "postcss-scss": "4.0.9",
+        "prettier": "3.9.10",
+        "sass-embedded": "1.107.0",
+        "stylelint": "17.16.0",
+        "stylelint-config-recess-order": "7.9.0",
+        "stylelint-config-standard": "40.0.0",
+        "stylelint-config-standard-scss": "17.0.0",
+        "stylelint-order": "8.1.2",
+        "stylelint-prettier": "5.0.3",
+        "typescript": "5.9.3",
+        "typescript-eslint": "8.72.1",
+        "vite": "8.3.5",
+        "vite-bundle-visualizer": "1.2.1"
+    }
+}
