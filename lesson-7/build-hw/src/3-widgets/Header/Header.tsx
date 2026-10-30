@@ -1,4 +1,4 @@
-import { useAuth } from '4-features/ authRouting/2-useAuth';
+import { useAuth } from '4-features/authRouting/2-useAuth';
 import { HEADER_SHELTER_TITLE } from '6-shared/config/constants';
 import { AppBar, Box, Link as MuiLink, Toolbar, Typography } from '@mui/material';
 import type { FC } from 'react';
@@ -38,17 +38,17 @@ export const Header: FC = () => {
                             <NavLink
                                 key={link.href}
                                 to={link.href}
-                                style={{ textDecoration: 'none' }} // Отключаем стандартное подчеркивание ссылки браузера
+                                style={{ textDecoration: 'none' }}
                             >
                                 {({ isActive }) => (
                                     <MuiLink
                                         component={'span'}
                                         sx={{
-                                            color: isActive ? 'rgb(21, 57, 98)' : 'white', // Переключаем цвет по флагу
+                                            color: isActive ? 'rgb(21, 57, 98)' : 'white',
                                             fontWeight: isActive ? 'bold' : 'normal',
                                             textDecoration: 'none',
                                             paddingLeft: '1rem',
-                                            transition: 'all 0.2s ease', // Плавный переход при смене роута
+                                            transition: 'all 0.2s ease', // плавный переход при смене роута
                                             '&:hover': {
                                                 color: 'primary.dark',
                                             },

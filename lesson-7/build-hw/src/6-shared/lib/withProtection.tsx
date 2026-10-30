@@ -23,9 +23,6 @@ export const withProtection = <P extends object>(
             return (
                 <Navigate
                     to="/signin"
-                    // при этом мы передаем состояние, в котором указываем, какую
-                    // страницу хотел посетить пользователь. И если он в дальнейшем
-                    // войдет в систему, то мы его автоматически перебросим на желаемую страницу
                     replace={true}
                     state={{
                         from: location.pathname,
