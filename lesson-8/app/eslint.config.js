@@ -24,8 +24,11 @@ export default defineConfig([
             js,
         },
         settings: {
-            react: {
-                version: 'detect',
+            react: { version: 'detect' },
+            ['import/resolver']: {
+                typescript: {
+                    project: './tsconfig.app.json',
+                },
             },
         },
         languageOptions: {
@@ -44,8 +47,7 @@ export default defineConfig([
                     patterns: [
                         {
                             group: ['@siburkit/inputs'],
-                            message:
-                                'Импорт из "@siburkit/inputs" запрещён. Используйте "@sibur/dsr-inputs" вместо этого.',
+                            message: 'Импорт из "@siburkit/inputs" запрещён. Используйте "@sibur/dsr-inputs" вместо этого.',
                         },
                     ],
                 },
@@ -63,6 +65,7 @@ export default defineConfig([
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            'no-empty': ['error', { allowEmptyCatch: true }],
         },
     },
 ]);

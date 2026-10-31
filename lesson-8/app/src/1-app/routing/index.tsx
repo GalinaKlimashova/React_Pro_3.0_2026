@@ -1,7 +1,7 @@
 import { withProtection } from '@zh2s/react-utils';
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
-import { MainPage } from '2-pages/Main';
+// import { MainPage } from '2-pages/Main';
 import { NotFoundPage } from '2-pages/NotFound';
 import { SignInPage } from '2-pages/SignIn';
 import { SignOutPage } from '2-pages/SignOut';
@@ -12,6 +12,9 @@ import { App } from '../App';
 
 const ProfilePage = lazy(() => import('2-pages/Profile').then((module) => ({ default: module.ProfilePage })));
 const ProfilePageWithProtection = withProtection(ProfilePage, useContextAuthStrategy);
+const PortalShowcasePage = lazy(() =>
+    import('2-pages/PortalShowcase').then((module) => ({ default: module.PortalShowcase })),
+);
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +23,8 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <MainPage />,
+                // element: <MainPage />,
+                element: <PortalShowcasePage />,
             },
             {
                 path: 'profile',
