@@ -53,3 +53,67 @@ export const HEADER_SHELTER_TITLE = 'Приют для животных. Кот�
 // ─── Toast error messages ──────────────────────────────────────────────────────
 
 export const TOAST_ERROR_SIGN_IN = 'Ошибка при входе';
+
+// ─── React 19 Examples (react19Examples) ───────────────────────────────────────
+
+// useActionState.reducer
+
+export const HEADING_ACTION_STATE_REDUCER = 'useActionState.reducer';
+
+export const LABEL_NAME = 'Имя';
+export const LABEL_SURNAME = 'Фамилия';
+export const LABEL_NICKNAME = 'Ник';
+export const LABEL_PATRONYMIC = 'Отчество';
+export const LABEL_SKIP_PATRONYMIC = 'Без отчества';
+
+export const BTN_SAVE = 'Сохранить';
+export const BTN_SAVING = 'Сохранение...';
+
+export const ACTION_SET_VALUES = 'SET_VALUES';
+
+export const CAPTION_FORM_CHANGED = 'Форма изменена:';
+export const STATUS_YES = 'Да';
+export const STATUS_NO = 'Нет';
+
+// useOptimistic
+
+export const HEADING_OPTIMISTIC_USERS = 'Users:';
+
+export const INPUT_NAME_PLACEHOLDER = 'Prefix';
+export const INPUT_NAME_LABEL = 'Prefix';
+export const BTN_ADD = 'Add';
+
+// Demo data (not for production, just for testing)
+
+export const DEMO_USER_FIRST_NAME = 'First';
+export const DEMO_USER_SECOND_NAME = 'Second';
+
+// form-with-async-save
+
+export const BTN_SAVED = 'Saved!';
+
+// form fields
+
+export const emailField = 'contactEmail';
+export const emailLabel = 'Email для отправкии сообщений';
+export const emailPlaceholder = 'passenger@example.com';
+export const emailType = 'email';
+
+export const usernameField = 'username';
+export const usernameLabel = 'ФИО пассажира';
+export const usernamePlaseholder = 'Например: Иванов Иван Иванович';
+
+export const inputTextType = 'text';
+
+// Action types for useActionState reducers
+
+export const ACTION_SET_DIRTY = 'SET_DIRTY';
+export const ACTION_SUBMIT_START = 'SUBMIT_START';
+export const ACTION_SUBMIT_SUCCESS = 'SUBMIT_SUCCESS';
+export const ACTION_SUBMIT_FAILURE = 'SUBMIT_FAILURE';
+export const ACTION_RESET = 'RESET';
+
+// Общие константы для всех примеров
+
+export const SAVE_ACTION_TYPE = 'SAVE';
+export const CLEAR_ACTION_TYPE = 'CLEAR';

@@ -1,4 +1,12 @@
-import { loginUrl, profileUrl, publicUrl, signUpUrl } from '6-shared/config/urls';
+import {
+    loginUrl,
+    profileUrl,
+    publicUrl,
+    signUpUrl,
+    useActionStateUrl,
+    useOptimisticUrl,
+    actionStateWithReducerUrl,
+} from '6-shared/config/urls';
 import type { HeaderLink } from './model';
 
 export const AUTHORIZED_LINKS: HeaderLink[] = [
@@ -10,4 +18,7 @@ export const UNAUTHORIZED_LINKS: HeaderLink[] = [
     { href: publicUrl, title: 'Открытая страница (PublicPage)' },
     { href: signUpUrl, title: 'Регистрация (SignUp)' },
     { href: loginUrl, title: 'Вход (SignIn)' },
+    { href: useActionStateUrl, title: 'useActionState (FormWithAsyncSave)' },
+    { href: useOptimisticUrl, title: 'useOptimistic (TodoListOptimistic)' },
+    { href: actionStateWithReducerUrl, title: 'useActionState.reducer (ActionStateWithReducer)' },
 ];
