@@ -1,4 +1,3 @@
-import { withProtection } from '@zh2s/react-utils';
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { ActivityPage } from '2-pages/Activity';
@@ -9,10 +8,10 @@ import { SignUpPage } from '2-pages/SignUp';
 import { UseEffectEventPage } from '2-pages/UseEffectEvent';
 import { UseOptimisticPage } from '2-pages/UseOptimistic';
 import { UseTransitionPage } from '2-pages/UseTransition';
-import { useContextAuthStrategy } from '6-shared/lib/useContextAuthStrategy';
+// import { useContextAuthStrategy } from '6-shared/lib/useContextAuthStrategy';
 import { App } from '../App';
 
-const ProfilePage = lazy(() => import('2-pages/Profile').then((module) => ({ default: module.ProfilePage })));
+// const ProfilePage = lazy(() => import('2-pages/Profile').then((module) => ({ default: module.ProfilePage })));
 
 const SignInPage = lazy(async () => {
     const component = await import('2-pages/SignIn');
@@ -20,7 +19,7 @@ const SignInPage = lazy(async () => {
     return { default: component.SignInPage };
 });
 
-const ProfilePageWithProtection = withProtection(ProfilePage, useContextAuthStrategy);
+// const ProfilePageWithProtection = withProtection(ProfilePage, useContextAuthStrategy);
 
 export const router = createBrowserRouter([
     {
@@ -31,10 +30,10 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <MainPage />,
             },
-            {
-                path: 'profile',
-                element: <ProfilePageWithProtection />,
-            },
+            // {
+            //     path: 'profile',
+            //     element: <ProfilePageWithProtection />,
+            // },
             {
                 path: 'activity',
                 element: <ActivityPage />,
