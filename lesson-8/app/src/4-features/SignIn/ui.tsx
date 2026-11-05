@@ -29,6 +29,7 @@ export const SignIn: FC = () => {
         watch,
     } = form;
 
+    // eslint-disable-next-line react-hooks/incompatible-library
     const emailThrottled = useThrottle(watch('email'), 1000);
 
     const { mutateAsync, isPending } = useSignInApi();

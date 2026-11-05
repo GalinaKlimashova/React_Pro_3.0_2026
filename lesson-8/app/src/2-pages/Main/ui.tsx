@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { toastObserver } from '@zh2s/my-toast';
+// import { toastObserver } from '@zh2s/my-toast';
 import type { FC } from 'react';
 import { toast } from 'react-toastify';
 
@@ -24,12 +24,12 @@ export const Main: FC = () => {
         toast[type](text);
     };
 
-    const myToastHandler = ({ text, type }: Toast) => {
-        toastObserver.notify({
-            title: text,
-            type,
-        });
-    };
+    // const myToastHandler = ({ text, type }: Toast) => {
+    //     toastObserver.notify({
+    //         title: text,
+    //         type,
+    //     });
+    // };
 
     return (
         <>
@@ -50,13 +50,13 @@ export const Main: FC = () => {
                 ))}
             </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                 {TOASTIFY_TOASTS.map((toast, index) => (
                     <Button key={index} variant="contained" color={toast.type} onClick={() => myToastHandler(toast)}>
                         Open My {toast.type.charAt(0).toUpperCase() + toast.type.slice(1)} Toast
                     </Button>
                 ))}
-            </Box>
+            </Box> */}
         </>
     );
 };

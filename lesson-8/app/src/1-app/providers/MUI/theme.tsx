@@ -9,14 +9,14 @@ import type { NavLinkProps as NavRouterLinkProps } from 'react-router';
 const LinkBehavior = forwardRef<HTMLAnchorElement, Omit<NavRouterLinkProps, 'to'> & { href: NavRouterLinkProps['to'] }>(
     (props, ref) => {
         const { href, style, ...other } = props;
-        const theme = useTheme();
+        const muiTheme = useTheme();
 
         return (
             <NavRouterLink
                 style={({ isActive }) => {
                     return {
                         ...style,
-                        color: isActive ? theme.palette.warning.main : theme.palette.primary.main,
+                        color: isActive ? muiTheme.palette.warning.main : muiTheme.palette.primary.main,
                     };
                 }}
                 // Prop end нужен для более точного определения активной ссылки
@@ -32,18 +32,26 @@ const LinkBehavior = forwardRef<HTMLAnchorElement, Omit<NavRouterLinkProps, 'to'
 
 LinkBehavior.displayName = 'LinkBehavior';
 
-export const theme = createTheme({
-    components: {
-        MuiLink: {
-            defaultProps: {
-                component: LinkBehavior,
-                underline: 'none',
-            } as Omit<LinkProps, 'className'>,
-        },
-        MuiButtonBase: {
-            defaultProps: {
-                LinkComponent: LinkBehavior,
+export const createMuiTheme = (mode: 'light' | 'dark') =>
+    createTheme({
+        palette: {
+            mode,
+            background: {
+                default: mode === 'dark' ? '#121212' : '#ffffff',
+                paper: mode === 'dark' ? '#1e1e1e' : '#ffffff',
             },
         },
-    },
-});
+        components: {
+            MuiLink: {
+                defaultProps: {
+                    component: LinkBehavior,
+                    underline: 'none',
+                } as Omit<LinkProps, 'className'>,
+            },
+            MuiButtonBase: {
+                defaultProps: {
+                    LinkComponent: LinkBehavior,
+                },
+            },
+        },
+    });

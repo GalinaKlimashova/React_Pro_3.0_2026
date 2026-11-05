@@ -1,16 +1,20 @@
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
+    /* eslint-disable no-console */
     console.log({ mode });
+    /* eslint-enable no-console */
 
     return {
-        plugins: [react(), mode === 'analyze' ? visualizer({ open: true, template: 'flamegraph' }) : null],
-        resolve: {
-            tsconfigPaths: true,
-        },
+        plugins: [
+            react(),
+            tsconfigPaths(),
+            mode === 'analyze' ? visualizer({ open: true, template: 'flamegraph' }) : null,
+        ],
 
         build: {
             outDir: 'build',

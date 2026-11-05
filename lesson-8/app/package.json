@@ -6,19 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "ncu:list": "ncu",
-    "check:bundleSize": "vite build --mode analyze",
-    "ncu:interactive": "ncu -i",
     "fix:eslint": "eslint --fix --max-warnings 0",
-    "fix:prettier": "prettier --ignore-path .gitignore --write",
-    "fix:stylelint": "stylelint --fix",
-    "fix:eslint:all": "npm run fix:eslint -- ./src",
-    "fix:prettier:all": "npm run fix:prettier -- \"./src/**/*.{ts,tsx,scss,sass,css,md,mdx}\"",
-    "fix:stylelint:all": "npm run fix:stylelint -- \"./src/**/*.{scss,sass,css}\"",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "prepare": "husky",
-    "pre-commit": "lint-staged"
+    "preview": "vite preview"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -74,6 +64,12 @@
     "sass-embedded": "1.106.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.57.0",
-    "vite": "8.3.5"
+    "vite": "8.3.5",
+    "vite-tsconfig-paths": "~6.1.1"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-darwin-arm64": "*",
+    "@rolldown/binding-darwin-x64": "*",
+    "@rolldown/binding-linux-x64-gnu": "*"
   }
 }

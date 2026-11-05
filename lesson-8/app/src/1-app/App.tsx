@@ -2,11 +2,12 @@ import { Box, CircularProgress, Container } from '@mui/material';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { Header } from '3-widgets/Header';
+import { ThemeProvider } from '6-shared/model/theme';
 import { withProviders } from './providers';
 
 export const App = withProviders(() => {
     return (
-        <>
+        <ThemeProvider>
             <Box
                 sx={{
                     display: 'flex',
@@ -27,6 +28,6 @@ export const App = withProviders(() => {
                     </Suspense>
                 </Container>
             </Box>
-        </>
+        </ThemeProvider>
     );
 });

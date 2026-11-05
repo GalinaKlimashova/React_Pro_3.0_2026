@@ -1,7 +1,7 @@
-export const getEnvVariable = (key: string) => {
+export const getEnvVariable = (key: string, fallback = '') => {
     const value = import.meta.env[key];
 
-    if (value === undefined) throw new Error(`Env variable ${key} is required`);
+    if (value === undefined) return fallback;
 
     return value;
 };
