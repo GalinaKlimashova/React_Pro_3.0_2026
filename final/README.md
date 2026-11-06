@@ -57,16 +57,16 @@
 Вынесите переиспользуемые UI-компоненты в:
 
 ```text
-src/6-shared/ui
+src/shared/ui
 ```
 
 Например:
 
 ```text
-src/6-shared/ui/Button
-src/6-shared/ui/Input
-src/6-shared/ui/Loader
-src/6-shared/ui/Modal
+src/shared/ui/Button
+src/shared/ui/Input
+src/shared/ui/Loader
+src/shared/ui/Modal
 ```
 
 Разделите бизнес-функциональность по фичам.
@@ -166,7 +166,7 @@ src/features/cart
 Создайте компонент:
 
 ```text
-src/6-shared/ui/Modal
+src/shared/ui/Modal
 ```
 
 Модальное окно должно рендериться через:
@@ -237,7 +237,7 @@ src/features/auth/LoginForm.jsx
 или:
 
 ```text
-src/6-shared/ui/Modal
+src/shared/ui/Modal
 ```
 
 ### Чек-лист

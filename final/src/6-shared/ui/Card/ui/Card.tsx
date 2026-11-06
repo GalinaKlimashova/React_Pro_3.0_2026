@@ -1,17 +1,18 @@
 import classNames from 'classnames';
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import { useAddToCart } from '../../../hooks/useAddToCart';
+import { cartSelectors } from '../../../store/slices/cart';
+import { useAppSelector } from '../../../store/utils';
+import { CartCounter } from '../../CartCounter';
+import { LikeButton } from '../../LikeButton';
 import s from './Card.module.css';
 import { Price } from './Price/ui/Price';
-import { Link } from 'react-router-dom';
-import { LikeButton } from '../../LikeButton';
-import { useAppSelector } from '@shared/store/utils';
-import { cartSelectors } from '@shared/store/slices/cart';
-import { useAddToCart } from '@shared/hooks/useAddToCart';
-import { CartCounter } from '../../CartCounter';
 
 type CardProps = {
 	product: Product;
 };
-export const Card = ({ product }: CardProps) => {
+export const Card = memo<CardProps>(({ product }) => {
 	const { discount, price, name, tags, id, images } = product;
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 	const isProductInCart = cartProducts.some((p) => p.id === id);
@@ -67,4 +68,5 @@ export const Card = ({ product }: CardProps) => {
 			)}
 		</article>
 	);
-};
+});
+Card.displayName = 'Card';

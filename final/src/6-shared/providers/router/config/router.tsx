@@ -5,10 +5,10 @@ import { ProductPage } from '@pages/ProductPage';
 import { NotFoundPage } from '@pages/NotFoundPage';
 import { ProfilePage } from '@pages/ProfilePage';
 import { FavoritesPage } from '@pages/FavoritesPage';
-import { App } from '../../../../1-app';
+import { App } from '@app';
 import { SignUpPage } from '@pages/SignUpPage';
 import { SignInPage } from '@pages/SignInPage';
-import { CartPage } from '@pages/CartPage';
+import { CartPage } from '@features/cart/CartPage';
 
 export enum AppRoutes {
 	HOME = 'home',
@@ -34,7 +34,7 @@ export const RoutePath: Record<AppRoutes, `/${string}` | '*'> = {
 
 export const router = createBrowserRouter([
 	{
-		path: RoutePath.home,
+		path: RoutePath[AppRoutes.HOME],
 		element: <App />,
 		children: [
 			{
@@ -42,33 +42,33 @@ export const router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: RoutePath.favorites,
+				path: RoutePath[AppRoutes.FAVORITES],
 				element: <FavoritesPage />,
 			},
 			{
-				path: RoutePath.products,
+				path: RoutePath[AppRoutes.PRODUCTS],
 				element: <ProductPage />,
 			},
 			{
-				path: RoutePath.profile,
+				path: RoutePath[AppRoutes.PROFILE],
 				element: <ProfilePage />,
 			},
 			{
-				path: RoutePath.cart,
+				path: RoutePath[AppRoutes.CART],
 				element: <CartPage />,
 			},
 			{
-				path: RoutePath.signup,
+				path: RoutePath[AppRoutes.SIGNUP],
 				element: <SignUpPage />,
 			},
 			{
-				path: RoutePath.signin,
+				path: RoutePath[AppRoutes.SIGNIN],
 				element: <SignInPage />,
 			},
 
 			// last route
 			{
-				path: RoutePath.not_found,
+				path: RoutePath[AppRoutes.NOT_FOUND],
 				element: <NotFoundPage />,
 			},
 		],

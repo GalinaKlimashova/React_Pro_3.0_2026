@@ -8,15 +8,17 @@ import { userSelectors } from '@shared/store/slices/user';
 import { isLiked } from '@shared/utils';
 import { useProducts } from '@shared/store/hooks/useProducts';
 import { cartSelectors } from '@shared/store/slices/cart';
+import { useMemo } from 'react';
 
 export const Header = () => {
 	const { products } = useProducts();
 	const user = useAppSelector(userSelectors.getUser);
 	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 
-	const likeCount = products.filter((product) =>
-		isLiked(product.likes, user?.id)
-	).length;
+	const likeCount = useMemo(() => {
+		return products.filter((product) => isLiked(product.likes, user?.id))
+			.length;
+	}, [products, user?.id]);
 
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 
