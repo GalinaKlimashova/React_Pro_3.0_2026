@@ -1,7 +1,10 @@
 import s from './Search.module.css';
 import { useProductsSearchForm } from '../hooks/usePostsSearchForm';
+import { memo } from 'react';
 
-export const Search = () => {
+export const Search = memo(SearchInner);
+
+function SearchInner() {
 	const { searchValue, setSearchValue } = useProductsSearchForm();
 
 	const handleClearSearchText = () => {
@@ -38,4 +41,4 @@ export const Search = () => {
 			)}
 		</form>
 	);
-};
+}

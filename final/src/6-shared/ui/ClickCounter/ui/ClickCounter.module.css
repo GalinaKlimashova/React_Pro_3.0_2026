@@ -1,0 +1,36 @@
+.counter {
+	background-color: #f5f5f5;
+	border-radius: 8px;
+	padding: 16px;
+	margin: 16px 0;
+}
+
+.counter__title {
+	margin: 0 0 8px 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: #1a1a1a;
+}
+
+.counter__text {
+	margin: 0 0 12px 0;
+	font-size: 14px;
+	color: #7b8e98;
+}
+
+.counter__button {
+	display: inline-block;
+	padding: 8px 16px;
+	margin-right: 8px;
+	background-color: #ffe44d;
+	color: #1a1a1a;
+	border: none;
+	border-radius: 20px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.counter__button:hover {
+	background-color: #ffaa0d;
+}

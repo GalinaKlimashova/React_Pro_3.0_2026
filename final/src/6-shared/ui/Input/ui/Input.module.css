@@ -1,0 +1,41 @@
+.input {
+	padding: 10px 14px;
+	font-size: 16px;
+	line-height: 20px;
+	border: 1px solid #cfd8dc;
+	border-radius: 8px;
+	outline: none;
+	transition: border-color 0.2s;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.input:focus {
+	border-color: #7b8e98;
+}
+
+.input_error {
+	border-color: #f44336;
+}
+
+.textarea {
+	padding: 10px 14px;
+	font-size: 16px;
+	line-height: 20px;
+	border: 1px solid #cfd8dc;
+	border-radius: 8px;
+	outline: none;
+	transition: border-color 0.2s;
+	width: 100%;
+	min-height: 100px;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.textarea:focus {
+	border-color: #7b8e98;
+}
+
+.textarea_error {
+	border-color: #f44336;
+}

@@ -1,9 +1,10 @@
 import { useLocation } from 'react-router-dom';
-import { userSelectors } from '@shared/store/slices/user';
-import { useAppSelector } from '@shared/store/utils';
-import { isLiked } from '@shared/utils';
-import { productsSelectors } from '@shared/store/slices/products';
-import { useGetProductsQuery } from '@shared/store/api/productsApi';
+import { useMemo } from 'react';
+import { userSelectors } from '../slices/user';
+import { useAppSelector } from '../utils';
+import { isLiked } from '../../utils';
+import { productsSelectors } from '../slices/products';
+import { useGetProductsQuery } from '../api/productsApi';
 
 export const useProducts = () => {
 	const { pathname } = useLocation();
@@ -20,18 +21,20 @@ export const useProducts = () => {
 		perPage: isFavoritesPage ? undefined : perPage,
 	});
 
-	let products = data?.products || [];
-
+	const products = data?.products || [];
 	const user = useAppSelector(userSelectors.getUser);
 
-	if (isFavoritesPage) {
-		products = products.filter((product) => isLiked(product.likes, user?.id));
-	}
+	const filteredProducts = useMemo(() => {
+		if (isFavoritesPage && user?.id !== undefined) {
+			return products.filter((product) => isLiked(product.likes, user.id));
+		}
+		return products;
+	}, [products, isFavoritesPage, user?.id]);
 
 	const productsCount = data?.length || 0;
 
 	return {
-		products,
+		products: filteredProducts,
 		isLoading,
 		isError,
 		isFetching,
