@@ -18,8 +18,31 @@
 		"sourceMap": true,
 		"allowJs": true /* Allow javascript files to be compiled. Useful when migrating JS to TS */,
 		// "checkJs": true /* Report errors in .js files. Works in tandem with allowJs. */,
-		"plugins": [{ "name": "typescript-plugin-css-modules" }]
+		"plugins": [
+			{
+				"name": "typescript-plugin-css-modules"
+			}
+		],
+		"paths": {
+			"@app/*": [
+				"./src/1-app/*"
+			],
+			"@pages/*": [
+				"./src/2-pages/*"
+			],
+			"@widgets/*": [
+				"./src/3-widgets/*"
+			],
+			"@features/*": [
+				"./src/4-features/*"
+			],
+			"@shared/*": [
+				"./src/6-shared/*"
+			]
+		},
 	},
 	"outDir": "./dist/",
-	"include": ["src/**/*"]
+	"include": [
+		"src/**/*"
+	]
 }
