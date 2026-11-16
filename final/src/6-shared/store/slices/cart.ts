@@ -13,7 +13,12 @@ export const cartSlice = createSlice({
 	initialState: createInitState(),
 	reducers: {
 		addCartProduct(state, action: PayloadAction<CartProduct>) {
-			state.products = [...state.products, action.payload];
+			const existing = state.products.find((p) => p.id === action.payload.id);
+			if (existing) {
+				existing.count += action.payload.count;
+			} else {
+				state.products = [...state.products, action.payload];
+			}
 		},
 		deleteCartProduct(state, action: PayloadAction<CartProduct['id']>) {
 			state.products = state.products.filter((p) => p.id !== action.payload);
@@ -30,6 +35,7 @@ export const cartSlice = createSlice({
 	},
 	selectors: {
 		getCartProducts: (state: CartState) => state.products,
+		getCartProductIds: (state: CartState) => state.products.map((p) => p.id),
 	},
 });
 

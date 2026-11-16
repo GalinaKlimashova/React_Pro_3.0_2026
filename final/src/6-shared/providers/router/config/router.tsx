@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { HomePage } from '@pages/HomePage';
 import { ProductPage } from '@pages/ProductPage';
 import { NotFoundPage } from '@pages/NotFoundPage';
 import { ProfilePage } from '@pages/ProfilePage';
@@ -9,6 +8,8 @@ import { App } from '@app';
 import { SignUpPage } from '@pages/SignUpPage';
 import { SignInPage } from '@pages/SignInPage';
 import { CartPage } from '@features/cart/CartPage';
+import ProtectedRoute from '@shared/store/HOCs/ProtectedRoute';
+import { AuthGuard } from '@shared/store/HOCs/AuthGuard';
 
 export enum AppRoutes {
 	HOME = 'home',
@@ -34,28 +35,44 @@ export const RoutePath: Record<AppRoutes, `/${string}` | '*'> = {
 
 export const router = createBrowserRouter([
 	{
-		path: RoutePath[AppRoutes.HOME],
+		path: '/',
 		element: <App />,
 		children: [
 			{
 				index: true,
-				element: <HomePage />,
+				element: <AuthGuard />,
 			},
 			{
 				path: RoutePath[AppRoutes.FAVORITES],
-				element: <FavoritesPage />,
+				element: (
+					<ProtectedRoute>
+						<FavoritesPage />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: RoutePath[AppRoutes.PRODUCTS],
-				element: <ProductPage />,
+				element: (
+					<ProtectedRoute>
+						<ProductPage />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: RoutePath[AppRoutes.PROFILE],
-				element: <ProfilePage />,
+				element: (
+					<ProtectedRoute>
+						<ProfilePage />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: RoutePath[AppRoutes.CART],
-				element: <CartPage />,
+				element: (
+					<ProtectedRoute>
+						<CartPage />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: RoutePath[AppRoutes.SIGNUP],
@@ -65,7 +82,6 @@ export const router = createBrowserRouter([
 				path: RoutePath[AppRoutes.SIGNIN],
 				element: <SignInPage />,
 			},
-
 			// last route
 			{
 				path: RoutePath[AppRoutes.NOT_FOUND],

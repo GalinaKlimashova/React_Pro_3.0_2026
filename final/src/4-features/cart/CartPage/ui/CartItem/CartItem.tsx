@@ -1,15 +1,11 @@
-import { ReactComponent as TrashIcon } from '@shared/assets/icons/trash.svg';
+import TrashIcon from '@shared/assets/icons/trash.svg?url';
 import { Link } from 'react-router-dom';
-import s from '../../CartPage.module.css';
+import s from '../../../CartPage/ui/CartPage.module.css';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import {
-	cartActions,
-	cartSelectors,
-} from '@shared/store/slices/cart';
-import { CartCounter } from '@shared/ui/CartCounter';
-import { memo, useCallback } from 'react';
-import { useAppSelector } from '@shared/store/utils';
+import { cartActions } from '@shared/store/slices/cart';
+import { CartCounter } from '../../../ui/CartCounter';
+import { memo, useCallback, useMemo } from 'react';
 import type { CSSProperties } from 'react';
 
 type CartItemProps = {
@@ -19,20 +15,20 @@ export const CartItem = memo(CartItemInner);
 
 function CartItemInner({ product }: CartItemProps) {
 	const dispatch = useDispatch();
-	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
 	const { id, name, images, price, discount } = product;
-	const isProductInCart = cartProducts.some((p) => p.id === id);
 
 	const handleDelete = useCallback(() => {
 		dispatch(cartActions.deleteCartProduct(id));
 	}, [dispatch, id]);
 
-	const columnStyle: CSSProperties = {
-		display: 'flex',
-		flexDirection: 'column',
-		flexGrow: 1,
-	};
-	const rowStyle: CSSProperties = { display: 'flex', gap: '20px', flexGrow: 1 };
+	const columnStyle = useMemo<CSSProperties>(
+		() => ({ display: 'flex', flexDirection: 'column', flexGrow: 1 }),
+		[]
+	);
+	const rowStyle = useMemo<CSSProperties>(
+		() => ({ display: 'flex', gap: '20px', flexGrow: 1 }),
+		[]
+	);
 
 	return (
 		<div className={classNames(s['cart-item'])}>
@@ -52,7 +48,7 @@ function CartItemInner({ product }: CartItemProps) {
 						</Link>
 
 						<div>
-							{isProductInCart ? <CartCounter productId={id} /> : null}
+							<CartCounter productId={id} />
 
 							<div className={classNames(s['cart-item__price'])}>
 								<div className={classNames(s['price-big'], s['price-wrap'])}>
@@ -66,8 +62,15 @@ function CartItemInner({ product }: CartItemProps) {
 								</div>
 							</div>
 						</div>
-						<button className={classNames(s['cart-item__bnt-trash'])}>
-							<TrashIcon onClick={handleDelete} />
+						<button
+							className={classNames(s['cart-item__bnt-trash'])}
+							onClick={handleDelete}
+							aria-label='Удалить товар'>
+							<img
+								src={TrashIcon}
+								alt='delete'
+								style={{ width: 24, height: 24, cursor: 'pointer' }}
+							/>
 						</button>
 					</div>
 				</div>

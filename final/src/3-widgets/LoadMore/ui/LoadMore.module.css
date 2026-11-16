@@ -1,0 +1,39 @@
+.load-more {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 80px;
+	padding: 20px 0;
+}
+
+.load-more-text {
+	color: #6c757d;
+	font-size: 18px;
+	text-align: center;
+}
+
+.load-more-button {
+	padding: 20px 0;
+	color: #6c757d;
+	font-size: 18px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition: color 0.2s;
+}
+
+.load-more-button:hover {
+	color: #e53935;
+}
+
+.load-more-button:disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+
+.load-more-end {
+	margin-top: 20px;
+	color: #4caf50;
+	font-size: 16px;
+	text-align: center;
+}

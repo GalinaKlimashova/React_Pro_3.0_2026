@@ -1,5 +1,4 @@
-import { FC, useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import s from './Modal.module.css';
 
 export interface ModalProps {
@@ -7,55 +6,26 @@ export interface ModalProps {
 	onClose: () => void;
 	title?: string;
 	children: React.ReactNode;
+	/** Ref на корневой элемент модального окна */
+	modalRef?: React.RefObject<HTMLDivElement | null>;
+	/** Ref на кнопку закрытия */
+	closeRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
-export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-	const closeRef = useRef<HTMLButtonElement>(null);
-	const modalRef = useRef<HTMLDivElement>(null);
-	let triggerElement: HTMLElement | null = null;
-
-	// Сохраняем элемент-триггер при открытии
-	useEffect(() => {
-		if (!isOpen) return;
-
-		triggerElement = document.activeElement as HTMLElement;
-
-		// Фокус на кнопку закрытия
-		closeRef.current?.focus();
-
-		// Обработчик ESC
-		const handleEsc = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') {
-				onClose();
-			}
-		};
-
-		// Обработчик клика вне области модалки
-		const handleClickOutside = (e: MouseEvent) => {
-			if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-				onClose();
-			}
-		};
-
-		document.addEventListener('keydown', handleEsc);
-		document.addEventListener('mousedown', handleClickOutside);
-
-		// Блокируем скролл body
-		document.body.style.overflow = 'hidden';
-
-		return () => {
-			document.removeEventListener('keydown', handleEsc);
-			document.removeEventListener('mousedown', handleClickOutside);
-			document.body.style.overflow = '';
-
-			// Возвращаем фокус на триггер
-			triggerElement?.focus();
-		};
-	}, [isOpen, onClose]);
-
+export const Modal = ({
+	isOpen,
+	onClose,
+	title,
+	children,
+	modalRef,
+	closeRef,
+}: ModalProps) => {
 	if (!isOpen) return null;
 
-	return ReactDOM.createPortal(
+	const modalRoot = document.getElementById('modal-root');
+	if (!modalRoot) return null;
+
+	return createPortal(
 		<div className={s['overlay']} role='presentation'>
 			<div className={s['modal']} ref={modalRef}>
 				{title && <h2 className={s['modal__title']}>{title}</h2>}
@@ -82,6 +52,6 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 				<div className={s['modal__content']}>{children}</div>
 			</div>
 		</div>,
-		document.getElementById('modal-root')!
+		modalRoot
 	);
 };

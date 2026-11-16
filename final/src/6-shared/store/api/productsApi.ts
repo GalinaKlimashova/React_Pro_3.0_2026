@@ -41,16 +41,18 @@ export const productsApi = createApi({
 	endpoints: (builder) => ({
 		getProducts: builder.query<ProductsResponse, ProductRequest>({
 			query: ({ searchText: searchTerm, sort, page, perPage }) => {
-				return {
-					url: '/products',
-					params: {
-						sort,
-						searchTerm: searchTerm.length ? searchTerm : undefined,
-						perPage: perPage ? page * perPage : undefined,
-					},
+				const params: Record<string, string | number | undefined> = {
+					page: page || 1,
+					sortTerm: searchTerm.length ? searchTerm : undefined,
+					perPage: perPage || undefined,
 				};
+				if (sort && sort !== 'all') {
+					params.sort = sort;
+				}
+				return { url: '/products', params };
 			},
 			providesTags: [{ type: 'Products', id: 'list' }],
+			serializeQueryArgs: ({ queryArgs }) => JSON.stringify(queryArgs),
 		}),
 		getProduct: builder.query<Product, Pick<Product, 'id'>>({
 			query: ({ id }) => ({ url: `/products/${id}` }),
@@ -83,10 +85,6 @@ export const productsApi = createApi({
 				url: `/products/${id}/likes`,
 				method: 'PUT',
 			}),
-			invalidatesTags: (productFromBE) => [
-				{ type: 'Products', id: 'list' },
-				{ type: 'Products', id: productFromBE?.like.productId },
-			],
 		}),
 		deleteLikeProduct: builder.mutation<
 			DeleteLikeResponse,
@@ -96,10 +94,6 @@ export const productsApi = createApi({
 				url: `/products/${id}/likes`,
 				method: 'DELETE',
 			}),
-			invalidatesTags: (productFromBE) => [
-				{ type: 'Products', id: 'list' },
-				{ type: 'Products', id: productFromBE?.product.productId },
-			],
 		}),
 	}),
 });

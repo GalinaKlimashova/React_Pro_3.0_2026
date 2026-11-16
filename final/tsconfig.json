@@ -24,12 +24,26 @@
 			}
 		],
 		"paths": {
-			"@app": ["1-app"],
-			"@pages/*": ["2-pages/*"],
-			"@widgets/*": ["3-widgets/*"],
-			"@features/*": ["4-features/*"],
-			"@shared/*": ["6-shared/*"]
-		}
+			"@app": [
+				"1-app"
+			],
+			"@pages/*": [
+				"2-pages/*"
+			],
+			"@widgets/*": [
+				"3-widgets/*"
+			],
+			"@features/*": [
+				"4-features/*"
+			],
+			"@entities/*": [
+				"5-entities/*"
+			],
+			"@shared/*": [
+				"6-shared/*"
+			]
+		},
+		"noUncheckedSideEffectImports": false
 	},
 	"outDir": "./dist/",
 	"include": [

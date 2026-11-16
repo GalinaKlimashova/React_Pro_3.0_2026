@@ -1,14 +1,14 @@
 import s from './ProfilePage.module.css';
 import classNames from 'classnames';
-import { ButtonBack } from '@shared/ui/ButtonBack';
-import { WithProtection } from '@shared/store/HOCs/WithProtection';
-import { Input } from '@shared/ui/Input';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@shared/ui/Button';
+import { Input } from '@shared/ui/Input';
 
-export const ProfilePage = WithProtection(() => {
+const ProfilePageInner = () => {
+	const navigate = useNavigate();
 	return (
 		<>
-			<ButtonBack />
+			<Button variant='back' onClick={() => navigate(-1)} />
 			<h1 className={s['form__title']}>Мои данные</h1>
 			<form className={classNames(s['form'], s['form'])}>
 				<div className={s['form__row']}>
@@ -62,9 +62,8 @@ export const ProfilePage = WithProtection(() => {
 						s['form__btn'],
 						s['secondary'],
 						s['maxContent']
-					)}>
-					Сохранить
-				</Button>
+					)}
+					title='Сохранить'></Button>
 			</form>
 			<h2 className={s['form__title']}>Изменить пароль</h2>
 			<form className={classNames(s['form'], s['form'])}>
@@ -86,10 +85,11 @@ export const ProfilePage = WithProtection(() => {
 						s['form__btn'],
 						s['secondary'],
 						s['maxContent']
-					)}>
-					Сохранить
-				</Button>
+					)}
+					title='Сохранить'></Button>
 			</form>
 		</>
 	);
-});
+};
+
+export const ProfilePage = ProfilePageInner;

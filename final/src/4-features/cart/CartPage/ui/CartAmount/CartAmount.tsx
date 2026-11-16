@@ -1,12 +1,12 @@
-import s from '../../CartPage.module.css';
+import s from '../../../CartPage/ui/CartPage.module.css';
 import classNames from 'classnames';
 import { Button } from '@shared/ui/Button';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, memo } from 'react';
 
 type CartAmountProps = {
 	products: CartProduct[];
 };
-export const CartAmount = ({ products }: CartAmountProps) => {
+export const CartAmount = memo(({ products }: CartAmountProps) => {
 	const { allPrice, allDiscount, total } = useMemo(() => {
 		const allPrice = products.reduce((acc, p) => p.price * p.count + acc, 0);
 		const allDiscount = products.reduce(
@@ -60,9 +60,9 @@ export const CartAmount = ({ products }: CartAmountProps) => {
 					s['button'],
 					s['button_type_primary'],
 					s['button_type_wide']
-				)}>
-				Оформить заказ
-			</Button>
+				)}
+				title='Оформить заказ'></Button>
 		</div>
 	);
-};
+});
+CartAmount.displayName = 'CartAmount';

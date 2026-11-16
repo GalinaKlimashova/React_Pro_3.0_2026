@@ -1,1 +1,1 @@
-export { Spinner } from '../Spinner/ui/Spinner';
+export { Loader } from './ui/Loader';

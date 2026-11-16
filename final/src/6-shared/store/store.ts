@@ -3,6 +3,7 @@ import AppApi from '../api/ApiServise';
 import { rootReducer } from './reducers/rootReducer';
 import { authApi } from './api/authApi';
 import { productsApi } from './api/productsApi';
+import { setApiStore } from './api/config';
 
 export const store = configureStore({
 	reducer: rootReducer,
@@ -14,3 +15,10 @@ export const store = configureStore({
 			},
 		}).concat([authApi.middleware, productsApi.middleware]),
 });
+
+setApiStore(store);
+
+if (process.env.NODE_ENV !== 'production') {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).__store = store;
+}

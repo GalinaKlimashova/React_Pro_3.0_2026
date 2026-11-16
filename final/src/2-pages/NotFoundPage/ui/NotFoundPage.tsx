@@ -4,7 +4,7 @@ import { Button } from '@shared/ui/Button';
 
 export const NotFoundPage = () => {
 	return (
-		<div className={s.NotFoundPage}>
+		<div className={s.notFoundPage}>
 			<h1>Страница на найдена</h1>
 			<Link to='/'>
 				<Button>Перейти на главную</Button>

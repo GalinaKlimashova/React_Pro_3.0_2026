@@ -31,7 +31,30 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|jpg|gif|webp)$/,
+				test: /\.svg$/,
+				resourceQuery: { not: [/url$/] },
+				issuer: /\.[jt]sx?$/,
+				exclude: /node_modules/,
+				use: ['@svgr/webpack'],
+			},
+			{
+				test: /\.svg$/,
+				resourceQuery: /url$/,
+				type: 'asset/resource',
+				generator: {
+					filename: 'static/images/[hash][ext][query]',
+				},
+			},
+			{
+				test: /\.svg$/,
+				type: 'asset/resource',
+				include: /node_modules/,
+				generator: {
+					filename: 'static/media/[hash][ext][query]',
+				},
+			},
+			{
+				test: /\.(png|jpg|jpeg|gif|webp)$/,
 				type: 'asset/resource',
 				generator: {
 					filename: 'static/images/[hash][ext][query]',
@@ -43,11 +66,6 @@ module.exports = {
 				generator: {
 					filename: 'static/fonts/[hash][ext][query]',
 				},
-			},
-			{
-				test: /\.svg$/i,
-				issuer: /\.[jt]sx?$/,
-				use: ['@svgr/webpack', 'url-loader'],
 			},
 			{
 				test: /\.css$/,
