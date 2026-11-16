@@ -16,6 +16,23 @@
 
 ---
 
+## Стек технологий
+
+| Категория | Технология | Версия |
+|---|---|---|
+| Фреймворк | React | 19.3.x |
+| State Management | Redux Toolkit + RTK Query | 2.2.x |
+| Роутинг | React Router DOM | 6.25.x |
+| UI-библиотеки | MUI, @emotion/react & styled | 5.16.x |
+| Формы | React Hook Form + yup | 7.52.x / 1.4.x |
+| Уведомления | react-toastify | 10.x |
+| Стили | CSS Modules, PostCSS, Autoprefixer, cssnano | — |
+| Линтеры | ESLint, Prettier, Stylelint | 8.42.x / 2.8.x / 15.7.x |
+| Сборщики | Webpack 5, Vite 5 (esbuild), esbuild | — |
+| Язык | TypeScript | 5.x |
+
+---
+
 ## Что уже реализовано в стартовом проекте
 
 В исходном проекте уже есть:
@@ -35,7 +52,7 @@
   - Stylelint;
   - TypeScript.
 
-В стартовом проекте пока отсутствуют:
+В стартовом проекте пока отсутствовали:
 
 - `React.Portal`;
 - практические сценарии использования `useRef`;
@@ -349,60 +366,208 @@ UI должен обновляться сразу, не дожидаясь от�
 
 ## Что было сделано
 
-- структура проекта переработана: `shared/ui`, `features/*`, `widgets/*`, `pages/*`;
-- UI-компоненты вынесены в `shared/ui` (Button, Rating, Loader, Logo и др.);
-- фичи разделены по папкам (`features/cart`, `features/auth`, `features/search`, `features/productDetails`);
-- реализован Modal через React Portal с управлением фокусом;
-- `useRef` применён для хранения значения без перерендера и для работы с DOM (autofocus);
-- добавлена альтернативная сборка через **Vite** (на базе esbuild) — **~7 сек** против **~33 сек** у Webpack;
-- SVG-импорты исправлены для совместимости с Vite-сборкой;
-- реализован `useOptimistic` для мгновенного обновления лайков без ожидания ответа сервера;
-- настроены линтеры: ESLint, Prettier, Stylelint;
+### 1. Архитектура — Feature-Sliced Design (FSD)
+
+Проект перестроен по методологии FSD. Уровни зависимостей пронумерованы в названиях папок, чтобы зависимости шли только в одном направлении — снизу вверх.
+
+Всего 144 файла организованы в шесть директорий:
+
+- `shared/ui` — простые компоненты без бизнес-логики: Button, Input, Loader, Logo, Modal, Price, Rating;
+- `features/*` — изолированные бизнес-фичи: корзина, авторизация, поиск, лайки;
+- `widgets/*` — композиционные блоки, собранные из features и entities: Header, Footer, CardList, LoadMore, ReviewList;
+- `entities/Card` — модель карточки товара;
+- `pages/*` — полноценные страницы из widgets: HomePage, ProductPage, CartPage, FavoritesPage, ProfilePage, SignInPage, SignUpPage, NotFoundPage;
+- `app` — корневая конфигурация, провайдеры, роутинг.
+
+Импорты идут строго снизу вверх: shared → entities → features → widgets → pages → app.
+
+### 2. Оптимизация рендеров
+
+Через React DevTools Profiler выяснил, что при обновлении списка товаров — во время debounce поиска или смены страницы — ререндерились все карточки. Причина: `data?.products` из RTK Query каждый раз возвращал новую ссылку на массив, из-за чего `React.memo` на `Card` не срабатывал.
+
+Решение: добавил `useMemo` для стабильной ссылки на массив продуктов и для `filteredProducts`, стабилизировал callback'и через `useCallback`. Теперь карточки ререндерятся только при реальном изменении данных.
+
+### 3. React Portal — Модальное окно
+
+Компонент `src/shared/ui/Modal` рендерится через `ReactDOM.createPortal(...)` в контейнер `#modal-root`. При закрытии работает `Escape`, клик по overlay, а также перенос фокуса внутрь модалки при открытии и возврат на кнопку-триггер при закрытии.
+
+### 4. useRef
+
+**Без перерендера.** В `src/1-app/ui/App.tsx` useRef хранит флаг `hasSynced` — нужно было отслеживать состояние между рендерами без лишнего обновления UI.
+
+**Работа с DOM.** useRef использован в шести местах:
+- Modal — ref на кнопку закрытия и на контейнер модалки;
+- ReviewList — ref на кнопку открытия формы;
+- ReviewForm — ref на форму;
+- LoadMore — ref на контейнер для Intersection Observer;
+- Auth Form — ref на поле email для autofocus.
+
+### 5. Альтернативная сборка через esbuild
+
+Настроен `esbuild.config.js` с кастомными плагинами для SVG и CSS Modules. CSS проходит PostCSS + Autoprefixer + cssnano. В production-режиме esbuild собирает проект за ~3 секунды против ~23 секунд у Webpack.
+
+Vite (`npm run build:vite`) изначально не собирал бандлы — был конфликт в конфигурации `assetFileNames`. Проблема решена: функция заменена на строковый формат, и Vite теперь тоже работает (7.7 сек). Подробности — в `BUILD_COMPARISON.md`.
+
+### 6. React 19 Hooks
+
+- `useOptimistic` — в `likeButton`: лайк отображается мгновенно, без ожидания ответа сервера. Если запрос падает, состояние откатывается назад.
+- `useActionState` — в формах авторизации: управление состоянием отправки формы с визуальной индикацией прогресса.
+
+### 7. Линтеры
+
+ESLint проверяет TypeScript-код, Prettier форматирует все файлы, Stylelint следит за CSS. Husky + lint-staged запускают линтеры при коммите. conventional-changelog стандартизирует commit-сообщения.
 
 ---
 
 ## Структура проекта
 
-Добавьте дерево основных директорий и кратко поясните назначение папок.
-
-Например:
+Проект организован по принципу **Feature-Sliced Design** (FSD):
 
 ```text
 src/
-├── shared/       # переиспользуемый код и UI
-├── features/     # бизнес-фичи приложения
-├── pages/        # страницы приложения
-├── store/        # Redux Store
-└── ...
+├── 1-app/                  # Корневая конфигурация приложения
+│   └── ui/                 # Корневой компонент App, провайдеры
+├── 2-pages/                # Страницы приложения (view-уровень)
+│   ├── FavoritesPage/ui    # Избранные товары
+│   ├── HomePage/ui         # Главная страница
+│   ├── NotFoundPage/ui     # 404
+│   ├── ProductPage/ui      # Страница товара
+│   ├── ProfilePage/ui      # Профиль пользователя
+│   ├── SignInPage/ui       # Авторизация
+│   └── SignUpPage/ui       # Регистрация
+├── 3-widgets/              # Композиционные блоки (собираются из features + entities)
+│   ├── CardList/ui         # Список карточек товаров
+│   ├── Footer/ui           # Подвал сайта
+│   ├── Header/ui           # Шапка сайта
+│   ├── LoadMore/ui         # Бесконечный скролл / подгрузка
+│   └── ReviewList/         # Форма и список отзывов
+├── 4-features/             # Бизнес-фичи (добавляют поведение)
+│   ├── auth/               # Авторизация
+│   │   ├── model/          # AuthProvider (контекст авторизации)
+│   │   ├── shared/Form/    # Переиспользуемая форма с Yup
+│   │   ├── SignInForm/     # Форма входа
+│   │   └── SignUpForm/     # Форма регистрации
+│   ├── cart/               # Корзина
+│   │   ├── CartPage/ui     # Страница корзины, CartItem, CartList
+│   │   └── ui/CartCounter/ # Счётчик количества в корзине
+│   ├── likeButton/         # Лайки (useOptimistic)
+│   └── search/             # Поиск и сортировка
+│       └── ui/Search       # Поле поиска с debounce
+│       └── ui/Sort         # Сортировка товаров
+├── 5-entities/             # Сущности (модели данных)
+│   └── Card/ui             # Карточка товара — модель продукта
+├── 6-shared/               # Общий код (переиспользуется везде)
+│   ├── api/                # HTTP-клиент, кастомные хуки
+│   ├── assets/             # Иконки, изображения
+│   ├── hooks/              # Переиспользуемые хуки
+│   ├── providers/          # RouterProvider, роут-конфиг
+│   ├── store/              # Redux slices, reducers, HOCs
+│   ├── types/              # Общие TypeScript-типы
+│   ├── ui/                 # Презентационные компоненты
+│   │   ├── Button/ui       # Кнопка
+│   │   ├── Input/ui        # Инпут
+│   │   ├── Loader/ui       # Лоадер
+│   │   ├── Logo/ui         # Логотип
+│   │   ├── Modal/ui        # Модальное окно через Portal
+│   │   ├── Price/ui        # Форматирование цены
+│   │   └── Rating/ui       # Рейтинг звёздами
+│   └── utils/              # Утилиты
+└── index.tsx               # Точка входа
 ```
+
+### Описание уровней
+
+| Уровень | Назначение | Пример |
+|---|---|---|
+| `app` | Точка входа, глобальные провайдеры | `<App />`, `index.tsx` |
+| `pages` | Полноценные страницы | `HomePage`, `CartPage` |
+| `widgets` | Блоки из features и entities | `Header`, `CardList`, `ReviewList` |
+| `features` | Самостоятельная функциональность | Лайки, корзина, поиск |
+| `entities` | Модели данных | Карточка товара |
+| `shared` | Общий код без логики | Button, Modal, хуки, типы |
+
+### Импорты по уровням
+
+```typescript
+import { Header }        from '@widgets/Header';
+import { Search }        from '@features/search';
+import { Card }          from '@entities/Card';
+import { Button }        from '@shared/ui/Button';
+```
+
+Импорты идут только снизу вверх — нижние уровни не зависят от верхних.
+
+### Количество файлов
+
+| Метрика | Значение |
+|---|---|
+| Файлов в `src/` | 144 |
+| Размер исходников (`du -sh src`) | ~600 КБ |
 
 ---
 
 ## Сравнение сборок
 
-В проекте реализована альтернативная сборка через **Vite** (на базе esbuild).
+В проекте реализована альтернативная сборка через **esbuild** (кастомный `esbuild.config.js`) и **Vite** (Rollup + esbuild).
 
-| Сборщик | Build time | Размер build | Статус |
-|---|---:|---:|---|
-| Webpack | ~33 сек | ~760 KB | Есть предсуществующая проблема с типизацией SVG (`@svgr/webpack` vs `<img src>`) |
-| Vite + esbuild | **~7 сек** | **~744 KB** | ✅ Работает |
+### Результаты замеров (production mode)
+
+Замеры выполнены на macOS, 2026-11-16.
+
+| Сборщик | Build time | Размер JS | Размер CSS | Полный размер dist | Статус |
+|---|---:|---:|---:|---:|---|
+| Webpack 5 | 23.5 сек | 697 КБ | 48 КБ | ~790 КБ | ⚠️ 3 предупреждения о размере бандла |
+| Vite 5 | 7.7 сек | 692 КБ | 34 КБ | ~758 КБ | ✅ Работает |
+| esbuild | 3.1 сек | 1218 КБ | 17 КБ | ~1.27 МБ | ✅ Работает |
+
+### Детали Webpack сборки
+
+```
+dist/
+├── static/
+│   ├── scripts/main.[hash].js     697 КБ
+│   ├── styles/main.[hash].css      48 КБ
+│   └── images/*.svg                 9 файлов (~27 КБ)
+└── index.html
+Итого: ~790 КБ
+```
+
+Webpack выдаёт предупреждения: JS-файл превышает лимит 244 КБ, рекомендуется code-splitting через `import()`.
+
+### Детали esbuild сборки (production)
+
+```
+dist-esbuild/
+├── static/
+│   ├── scripts/main.[hash].js       ~1.2 МБ
+│   ├── styles/main.[hash].css        17 КБ
+│   └── images/logo.svg                7 КБ
+└── index.html                         0.5 КБ
+Итого: ~1.27 МБ
+```
+
+esbuild использует кастомные плагины для SVG и CSS Modules. Все стили подставляются в бандл через `<style>` тег. Бандл крупнее Webpack примерно в 1.6 раза — esbuild не делает агрессивный tree-shaking.
 
 ### Детали Vite сборки
 
+Vite изначально не собирал бандлы — был конфликт в конфигурации `assetFileNames` (функция вместо строки) и пустой корневой `index.html`. Проблема решена:
+
+1. `assetFileNames` заменён на строку `'static/[name].[hash][extname]'`;
+2. Корневой `index.html` приведён в соответствие с правильным содержимым.
+
 ```
-dist-vite/index.html                          0.49 kB │ gzip:   0.31 kB
-dist-vite/static/media/logo.DR8_wP0j.svg      7.03 kB │ gzip:   2.89 kB
-dist-vite/static/styles/index.CBbfcScI.css   35.93 kB │ gzip:   7.10 kB
-dist-vite/static/scripts/index.C0g4kO6z.js  700.77 kB │ gzip: 228.82 kB
-───────────────────────────────────────────────────────────────
-Итого:                                          ~744 KB    │ gzip: ~239 KB
+dist-vite/
+├── static/
+│   ├── scripts/index.[hash].js    692 КБ
+│   ├── index.[hash].css            34 КБ
+│   └── *.svg                        13 КБ
+└── index.html                       0.48 КБ
+Итого: ~758 КБ
 ```
 
 ### Почему esbuild быстрее Webpack
 
-- **esbuild** использует Go-компиляцию и параллельную обработку, тогда как Webpack — чистый JavaScript
-- esbuild не выполняет tree-shaking на уровне модулей ESM так агрессивно, как Rollup/Vite
-- Минификация через esbuild встроена и работает на той же скорости
+esbuild написан на Go и компилируется в нативный код, Webpack работает на чистом JavaScript. Минификация встроена в esbuild (в Webpack используется отдельный плагин Terser). Tree-shaking esbuild выполняется на уровне ES-модулей без парсинга AST.
 
 ### Запуск
 
@@ -413,7 +578,7 @@ npm run build
 # Vite (альтернативная сборка)
 npm run build:vite
 
-# Esbuild (альтернативная сборка — конфиг в esbuild.config.js)
+# Esbuild (альтернативная сборка)
 npm run build:esbuild
 ```
 ---
@@ -436,7 +601,41 @@ npm run build:esbuild
 
 # Итоговый чек-лист
 
-Перед сдачей убедитесь, что:
+- [x] проект запускается без ошибок (`npm start`);
+- [x] production build создаётся (Webpack, Vite, esbuild);
+- [x] структура проекта переработана по методологии FSD;
+- [x] UI-компоненты вынесены в `shared/ui` (7 компонентов);
+- [x] фичи разделены по папкам;
+- [x] проведён анализ через React DevTools Profiler;
+- [x] выполнена оптимизация рендеров;
+- [x] реализован Modal через React Portal с управлением фокусом;
+- [x] useRef применён: 1 раз для хранения значения + 5 раз для работы с DOM (см. раздел "Что было сделано");
+- [x] настроена альтернативная сборка через esbuild и Vite;
+- [x] использованы React 19 hooks (`useActionState` + `useOptimistic`).
+
+### Оптимизация рендеров
+
+При обновлении списка товаров (debounce поиска, смена страницы) все карточки ререндерились зря. Причина — новый массив от RTK Query ломал `React.memo`. Добавил `useMemo` для массива продуктов и `useCallback` для callback'ов в карточках.
+
+### useRef
+
+Один useRef хранит флаг синхронизации в `App.tsx` без перерендера. Пять refs работают с DOM: кнопки закрытия модалки, контейнер модалки, кнопка открытия формы, форма, Intersection Observer, поле email для autofocus.
+
+### React 19 Hooks
+
+`useOptimistic` в лайках — лайк появляется мгновенно, откатывается при ошибке. `useActionState` в формах авторизации — показывает прогресс отправки.
+
+### Сборка
+
+| Сборщик | Build time | Полный размер |
+|---|---:|---:|
+| Webpack 5 | 23.5 сек | ~790 КБ |
+| Vite 5 | 7.7 сек | ~758 КБ |
+| esbuild | 3.1 сек | ~1.27 МБ |
+
+Подробности — в `BUILD_COMPARISON.md`.
+
+## Итоговый статус
 
 - [x] проект запускается без ошибок;
 - [x] production build успешно создаётся;
@@ -444,42 +643,21 @@ npm run build:esbuild
 - [x] UI-компоненты вынесены в `shared/ui`;
 - [x] фичи разделены по папкам;
 - [x] проведён анализ через React DevTools Profiler;
-
-## Оптимизация
-
-### Profiler hotspot
-
-Через **React DevTools Profiler** обнаружено, что при обновлении списка товаров (debounce поиска, смена страницы) ререндеривались все карточки, даже когда содержимое не менялось. Причина — `data?.products` из RTK Query каждый раз возвращал новый массив-ссылку, что ломало `React.memo` на `Card`.
-
-**Решение:** добавлен `useMemo` для стабильной ссылки на массив продуктов (`useProducts`) и для `filteredProducts` (избранное), стабилизированы callback'и в карточках через `useCallback`.
-
-**Результат:** после оптимизации карточки ререндерятся только при реальном изменении данных, а не при каждом поисковом debounce или `isFetching`-toggle.
-
-- [x] выполнена минимум одна осмысленная оптимизация рендеров;
+- [x] выполнена осмысленная оптимизация рендеров;
 - [x] реализован Modal через React Portal;
 - [x] реализовано управление фокусом в модальном окне;
-- [ ] `useRef` применён для хранения значения без перерендера;
-
-Единственный файл, где useRef используется для хранения не-DOM значения без триггера ререндера — это `src/1-app/ui/App.tsx`, строка 16:
-const hasSynced = useRef(false);
-
-- [x] `useRef` применён для работы с DOM;
-
-1. `src/3-widgets/LoadMore/ui/LoadMore.tsx` 
-(строка 22) — useRef<HTMLDivElement \| null>(null) — ссылка на контейнер
-2. `src/3-widgets/ReviewList/ui/ReviewList.t
-sx` (строка 17) — useRef<HTMLButtonElement>(null) — ссылка на кнопку
-3. `src/3-widgets/ReviewList/ui/ReviewForm/Re
-viewForm.tsx` (строка 36) — useRef<HTMLFormElement>(null) — ссылка на форму
-4. `src/4-features/auth/shared/Form/ui/Form.
-tsx` (строка 60) — useRef<HTMLInputElement>(null) — ссылка на поле email
-5. `src/6-shared/ui/Modal/ui/Modal.tsx` 
-(строка 21) — useRef<HTMLButtonElement>(null) — ссылка на кнопку закрытия
-6. `src/6-shared/ui/Modal/ui/Modal.tsx` 
-(строка 22) — useRef<HTMLDivElement>(null) — ссылка на модальное окно
-
-- [x] настроена альтернативная сборка через esbuild или SWC;
+- [x] `useRef` применён;
+- [x] настроена альтернативная сборка;
 - [x] выполнено сравнение сборок;
-- [x] использован `useActionState` или `useOptimistic`;
-- [x] README заполнен;
-- [x] приложены скриншоты или GIF ключевых возможностей.
+- [x] использованы React 19 hooks;
+- [x] README заполнен.
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+![alt text](image-8.png)

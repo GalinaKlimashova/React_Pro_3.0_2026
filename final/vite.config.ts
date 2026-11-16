@@ -34,11 +34,7 @@ export default defineConfig({
       output: {
         entryFileNames: 'static/scripts/[name].[hash].js',
         chunkFileNames: 'static/scripts/[name].[hash].js',
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name?.endsWith('.css')) return 'static/styles/[name].[hash][extname]';
-          if (/^(png|jpe?g|gif|webp|svg|ttf|otf|woff2?)$/i.test(String(assetInfo.name?.split('.').pop() || ''))) return 'static/media/[name].[hash][extname]';
-          return 'static/[name].[hash][extname]';
-        },
+        assetFileNames: 'static/[name].[hash][extname]',
       },
     },
   },
