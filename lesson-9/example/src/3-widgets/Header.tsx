@@ -20,9 +20,9 @@ export const Header: FC = () => {
                 </Link>
 
                 <Box component="nav" sx={{ ml: 'auto' }}>
-                    <Link href="/profile" sx={{ mx: 1 }}>
+                    {/* <Link href="/profile" sx={{ mx: 1 }}>
                         Профиль
-                    </Link>
+                    </Link> */}
                     <Link href="/activity" sx={{ mx: 1 }}>
                         Activity
                     </Link>

@@ -4,7 +4,8 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
     plugins: [
-        react(),
+        // @ts-expect-error - type definitions not updated in @vitejs/plugin-react@5.x
+        react({ reactCompiler: true }),
         tsconfigPaths()
     ]
 });

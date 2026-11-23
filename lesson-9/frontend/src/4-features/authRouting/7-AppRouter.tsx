@@ -1,7 +1,15 @@
 import { NotFoundPage } from '2-pages/NotFound';
 import { SignUp } from '2-pages/SignUp/SignUp';
 import { Header } from '3-widgets/Header';
-import { loginUrl, profileUrl, publicUrl, signUpUrl } from '6-shared/config/urls';
+import {
+    loginUrl,
+    profileUrl,
+    publicUrl,
+    signUpUrl,
+    useActionStateUrl,
+    useOptimisticUrl,
+    actionStateWithReducerUrl,
+} from '6-shared/config/urls';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { AuthProvider } from './1-AuthContext';
@@ -9,6 +17,9 @@ import { ProtectedRoute } from './3-ProtectedRoute';
 import { LoginPage } from './4-LoginPage';
 import { ProfilePage } from './5-ProfilePage';
 import { PublicPage } from './6-PublicPage';
+import { FormWithAsyncSave } from '4-features/react19Examples/form-with-async-save';
+import { TodoListOptimisticPage } from '4-features/react19Examples/use-optimistic';
+import { ActionStateWithReducer } from '4-features/react19Examples/action-state-with-reducer';
 
 const MainLayout = () => (
     <>
@@ -67,6 +78,54 @@ const signUpRouteNode = () => {
     );
 };
 
+const useActionStatePage = () => {
+    return (
+        <Route
+            path={useActionStateUrl}
+            element={
+                <>
+                    <Header />
+                    <div style={{ padding: '2rem' }}>
+                        <FormWithAsyncSave />
+                    </div>
+                </>
+            }
+        />
+    );
+};
+
+const useOptimisticPage = () => {
+    return (
+        <Route
+            path={useOptimisticUrl}
+            element={
+                <>
+                    <Header />
+                    <div style={{ padding: '2rem' }}>
+                        <TodoListOptimisticPage />
+                    </div>
+                </>
+            }
+        />
+    );
+};
+
+const actionStateWithReducerPage = () => {
+    return (
+        <Route
+            path={actionStateWithReducerUrl}
+            element={
+                <>
+                    <Header />
+                    <div style={{ padding: '2rem' }}>
+                        <ActionStateWithReducer />
+                    </div>
+                </>
+            }
+        />
+    );
+};
+
 const profileRouteNode = () => {
     {
         /* Защищённые маршруты */
@@ -110,6 +169,9 @@ export const AppRouter = () => (
                 {signUpRouteNode()}
                 {profileRouteNode()}
                 {notFoundNode()}
+                {useActionStatePage()}
+                {useOptimisticPage()}
+                {actionStateWithReducerPage()}
             </Routes>
             {getTostComponent()}
         </AuthProvider>
