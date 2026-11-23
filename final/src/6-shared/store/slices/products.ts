@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
+import { RootState } from '../types';
 
 export type ProductsState = {
 	sort: Sort;
@@ -9,14 +10,14 @@ export type ProductsState = {
 
 const initialState: ProductsState = {
 	searchText: '',
-	sort: 'newest',
+	sort: 'all',
 	page: 1,
 	perPage: 6,
 };
 
 export const productsSlice = createSlice({
 	name: 'products',
-	initialState: initialState,
+	initialState,
 	reducers: {
 		setSort: (state, action: PayloadAction<Sort>) => ({
 			...state,
@@ -30,6 +31,14 @@ export const productsSlice = createSlice({
 			...state,
 			page: action.payload,
 		}),
+		incrementPage: (state) => ({
+			...state,
+			page: state.page + 1,
+		}),
+		setRefresh: (state) => ({
+			...state,
+			page: 1,
+		}),
 	},
 
 	selectors: {
@@ -42,4 +51,14 @@ export const productsSlice = createSlice({
 });
 
 export const productsActions = { ...productsSlice.actions };
-export const productsSelectors = productsSlice.selectors;
+
+// Memoized selectors typed for RootState (compatible with useAppSelector)
+const selectProductsState = (state: RootState) => state.products;
+
+export const productsSelectors = {
+	getSort: createSelector([selectProductsState], (s) => s.sort),
+	getSearchText: createSelector([selectProductsState], (s) => s.searchText),
+	getPage: createSelector([selectProductsState], (s) => s.page),
+	getPerPage: createSelector([selectProductsState], (s) => s.perPage),
+	getProductsState: createSelector([selectProductsState], (s) => s),
+};

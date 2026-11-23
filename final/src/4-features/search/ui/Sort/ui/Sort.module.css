@@ -1,0 +1,13 @@
+.sort {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 30%;
+	margin: 8px 16px;
+	padding: 8px 16px;
+	font-size: 16px;
+	background: transparent;
+	border: 2px solid #e150cb;
+	border-radius: 2rem;
+	transition: border-color 0.3s;
+}

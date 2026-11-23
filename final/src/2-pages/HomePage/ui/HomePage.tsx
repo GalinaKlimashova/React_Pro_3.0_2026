@@ -1,13 +1,31 @@
-import { WithProtection } from '@shared/store/HOCs/WithProtection';
 import { WithQuery } from '@shared/store/HOCs/WithQuery';
-import { LoadMore } from '@shared/ui/LoadMore';
 import { CardList } from '@widgets/CardList';
+import { Loader } from '@shared/ui/Loader';
 import { useProducts } from '@shared/store/hooks/useProducts';
+import { useLoadMore } from '@shared/store/hooks/useLoadMore';
+import { useAppSelector } from '@shared/store/utils';
+import { cartSelectors } from '@shared/store/slices/cart';
+import { useNavigate } from 'react-router-dom';
+
+import { useCallback } from 'react';
 
 const CardListWithQuery = WithQuery(CardList);
 
-export const HomePage = WithProtection(() => {
-	const { products, isLoading, isError, error } = useProducts();
+const HomePageInner = () => {
+	const { products, isLoading, isError, error, isFetching, productsCount } =
+		useProducts();
+	const cartProductIds = useAppSelector(cartSelectors.getCartProductIds);
+	const navigate = useNavigate();
+
+	const handleProductClick = useCallback(
+		(id: string) => navigate(`/products/${id}`),
+		[navigate]
+	);
+
+	const displayedCount = products.length;
+	const isEndOfList = displayedCount >= productsCount;
+
+	useLoadMore(isFetching, isEndOfList);
 
 	return (
 		<>
@@ -17,8 +35,19 @@ export const HomePage = WithProtection(() => {
 				isError={isError}
 				products={products}
 				error={error}
+				cartProductIds={cartProductIds}
+				onProductClick={handleProductClick}
 			/>
-			<LoadMore />
+			{!isEndOfList && isFetching && (
+				<div style={{ textAlign: 'center', padding: '20px' }}>
+					<Loader />
+				</div>
+			)}
+			{isEndOfList && productsCount > 0 && (
+				<p style={{ textAlign: 'center', padding: '20px' }}>Список завершён</p>
+			)}
 		</>
 	);
-});
+};
+
+export const HomePage = HomePageInner;

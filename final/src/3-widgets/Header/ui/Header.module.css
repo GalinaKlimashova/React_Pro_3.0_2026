@@ -1,17 +1,18 @@
 .header {
 	width: 100%;
 	padding: 12px 0;
-	background-color: #ffe44d;
+	background-color: #f4d2f7;
 }
 
 .header__wrapper {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: 80px;
+
+	/* gap: 80px; */
 }
 
-@media (width <= 700px) {
+@media (width <=700px) {
 	.header__wrapper {
 		flex-direction: column;
 		align-items: stretch;
@@ -30,7 +31,8 @@
 .header__icons-menu {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 30px;
+
+	/* gap: 30px; */
 }
 
 .header__favorites-link {
@@ -54,11 +56,11 @@
 	box-sizing: border-box;
 	width: 22px;
 	height: 22px;
-	color: #ffffff;
+	color: #040404;
 	font-size: 14px;
 	line-height: 1.25;
-	background-color: #01a54e;
-	border: 2px solid #ffe44d;
+	background-color: #edb2e2;
+	border: 2px solid #e150cb;
 	border-radius: 50%;
 }
 
@@ -66,6 +68,7 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	margin-left: 1rem;
 	color: #1a1a1a;
 	font-weight: 600;
 	font-size: 18px;

@@ -121,4 +121,19 @@ input[type='number']:focus {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	margin-right: 2rem;
+	margin-left: 2rem;
+}
+
+.modal-trigger {
+	width: 20rem;
+}
+
+.modal-trigger:focus {
+	background-color: #4caf50;
+	outline: none;
+}
+
+.show-more-btn {
+	width: 20rem;
 }

@@ -31,7 +31,30 @@ module.exports = {
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|jpg|gif|webp)$/,
+				test: /\.svg$/,
+				resourceQuery: { not: [/url$/] },
+				issuer: /\.[jt]sx?$/,
+				exclude: /node_modules/,
+				use: ['@svgr/webpack'],
+			},
+			{
+				test: /\.svg$/,
+				resourceQuery: /url$/,
+				type: 'asset/resource',
+				generator: {
+					filename: 'static/images/[hash][ext][query]',
+				},
+			},
+			{
+				test: /\.svg$/,
+				type: 'asset/resource',
+				include: /node_modules/,
+				generator: {
+					filename: 'static/media/[hash][ext][query]',
+				},
+			},
+			{
+				test: /\.(png|jpg|jpeg|gif|webp)$/,
 				type: 'asset/resource',
 				generator: {
 					filename: 'static/images/[hash][ext][query]',
@@ -43,11 +66,6 @@ module.exports = {
 				generator: {
 					filename: 'static/fonts/[hash][ext][query]',
 				},
-			},
-			{
-				test: /\.svg$/i,
-				issuer: /\.[jt]sx?$/,
-				use: ['@svgr/webpack', 'url-loader'],
 			},
 			{
 				test: /\.css$/,
@@ -72,11 +90,11 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'], //указываем файлы с которыми будет работать webpack
 		alias: {
-			'@app': path.resolve(__dirname, '../src/1-app'),
-			'@pages': path.resolve(__dirname, '../src/2-pages'),
-			'@widgets': path.resolve(__dirname, '../src/3-widgets'),
-			'@features': path.resolve(__dirname, '../src/4-features'),
-			'@shared': path.resolve(__dirname, '../src/6-shared'),
+			'@shared': path.resolve(__dirname, '..', './src/6-shared'),
+			'@features': path.resolve(__dirname, '..', './src/4-features'),
+			'@widgets': path.resolve(__dirname, '..', './src/3-widgets'),
+			'@pages': path.resolve(__dirname, '..', './src/2-pages'),
+			'@app': path.resolve(__dirname, '..', './src/1-app'),
 		},
 	},
 	plugins: [

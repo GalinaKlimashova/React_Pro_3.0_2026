@@ -114,7 +114,7 @@ declare global {
 		updatedAt?: string;
 	};
 
-	type Sort = 'high-price' | 'low-price' | 'newest' | 'oldest';
+	type Sort = 'high-price' | 'low-price' | 'newest' | 'oldest' | 'all';
 
 	type Token = {
 		accessToken: string;

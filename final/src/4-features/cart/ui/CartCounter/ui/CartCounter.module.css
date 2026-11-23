@@ -1,0 +1,36 @@
+.button-count {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.button-count__minus,
+.button-count__plus {
+	padding: 4px 10px;
+	font-size: 16px;
+	background: #ffe44d;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.button-count__minus:disabled,
+.button-count__plus:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.button-count__minus:hover:not(:disabled),
+.button-count__plus:hover:not(:disabled) {
+	opacity: 0.8;
+}
+
+.button-count__num {
+	width: 40px;
+	padding: 4px;
+	font-size: 16px;
+	text-align: center;
+	border: 1px solid #cfd8dc;
+	border-radius: 4px;
+}

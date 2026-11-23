@@ -1,0 +1,32 @@
+.search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	border: 2px solid #e150cb;
+	border-radius: 55px;
+	transition: border-color 0.3s;
+}
+
+.search__input {
+	flex: 1;
+	font-size: 16px;
+	background: transparent;
+	border: none;
+	outline: none;
+}
+
+.search__btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 4px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.search__btn:hover {
+	opacity: 0.7;
+}

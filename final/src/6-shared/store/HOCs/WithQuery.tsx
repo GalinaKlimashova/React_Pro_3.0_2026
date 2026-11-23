@@ -6,8 +6,8 @@ import {
 	CircularProgress,
 	Container,
 } from '@mui/material';
-import { FC, ComponentType } from 'react';
-import { getMessageFromError } from '@shared/utils';
+import { FC, ComponentType, useCallback } from 'react';
+import { getMessageFromError } from '../../utils';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -25,11 +25,15 @@ export const WithQuery = <T extends object>(
 		const { isError, isLoading, refetch, error, ...propsForWrappedComponent } =
 			props;
 
+		const handleRetry = useCallback(() => {
+			refetch?.();
+		}, [refetch]);
+
 		if (isError) {
 			return (
 				<Container>
 					<Alert
-						action={<Button onClick={refetch}>Retry</Button>}
+						action={<Button onClick={handleRetry}>Retry</Button>}
 						severity='error'>
 						<AlertTitle>
 							{getMessageFromError(

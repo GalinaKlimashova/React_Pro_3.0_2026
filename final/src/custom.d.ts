@@ -1,10 +1,7 @@
 declare module '*.svg' {
-	import React = require('react');
-	export const ReactComponent: React.FunctionComponent<
-		React.SVGProps<SVGSVGElement>
-	>;
-	const src: string;
-	export default src;
+	// Default export — React-компонент (совместимо с vite-plugin-svgr и @svgr/webpack exportType: 'default')
+	const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+	export default ReactComponent;
 }
 declare module '*.png' {
 	const content: any;

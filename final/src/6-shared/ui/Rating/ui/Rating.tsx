@@ -1,21 +1,70 @@
-import { ReactComponent as Star } from '../../../assets/icons/star.svg';
+import { useMemo, useCallback, memo } from 'react';
 
 type TRating = {
 	rating?: number;
 	isEdit?: boolean;
 	onChange?: (rating: number) => void;
 };
-export const Rating = ({ rating = 0, isEdit = false, onChange }: TRating) => {
+
+const STARS_COUNT = 5;
+
+const StarIcon = ({ fill }: { fill: string }) => (
+	<svg
+		width='16'
+		height='16'
+		viewBox='0 0 16 16'
+		xmlns='http://www.w3.org/2000/svg'>
+		<path
+			d='M12.1108 14.2238C12.357 14.0388 12.411 13.7344 12.2609 13.3047L11.0061 9.58649L14.2121 7.30066C14.5844 7.03806 14.7345 6.75756 14.6384 6.46511C14.5424 6.17267 14.2602 6.02943 13.7979 6.0354L9.86538 6.06524L8.67062 2.32914C8.52652 1.89346 8.31039 1.66667 7.99819 1.66667C7.69199 1.66667 7.47586 1.89346 7.33177 2.32914L6.13701 6.06524L2.2045 6.0354C1.74221 6.02943 1.46003 6.17267 1.36397 6.46511C1.26191 6.75756 1.418 7.03806 1.79024 7.30066L4.99628 9.58649L3.74148 13.3047C3.59139 13.7344 3.64542 14.0388 3.89158 14.2238C4.13773 14.4148 4.44993 14.3491 4.82217 14.0806L7.99819 11.7589L11.1802 14.0806C11.5524 14.3491 11.8586 14.4148 12.1108 14.2238Z'
+			fill={fill}
+		/>
+	</svg>
+);
+
+const RatingInner = ({ rating = 0, isEdit = false, onChange }: TRating) => {
+	const starElements = useMemo(
+		() => [...Array(STARS_COUNT)].map((_e, i) => i),
+		[]
+	);
+
+	const handleStarClick = useCallback(
+		(index: number) => {
+			onChange?.(index + 1);
+		},
+		[onChange]
+	);
+
+	const handleKeyDown = useCallback(
+		(index: number, e: React.KeyboardEvent) => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				handleStarClick(index);
+			}
+		},
+		[handleStarClick]
+	);
+
 	return (
-		<div>
-			{[...Array(5)].map((_e, i) => (
-				<span key={i} style={{ cursor: isEdit ? 'pointer' : 'default' }}>
-					<Star
-						onClick={() => onChange?.(i)}
-						fill={i <= rating ? 'gold' : 'gray'}
-					/>
+		<div role='group' aria-label='Оценка'>
+			{starElements.map((i) => (
+				<span
+					key={i}
+					tabIndex={isEdit ? 0 : -1}
+					role={isEdit ? 'radio' : undefined}
+					aria-checked={isEdit && i < rating ? 'true' : undefined}
+					style={{ cursor: isEdit ? 'pointer' : 'default' }}
+					onClick={() => {
+						if (isEdit) handleStarClick(i);
+					}}
+					onKeyDown={(e) => {
+						if (isEdit) handleKeyDown(i, e);
+					}}>
+					<StarIcon fill={i < rating ? '#FFD700' : '#D9D9D9'} />
 				</span>
 			))}
 		</div>
 	);
 };
+
+export const Rating = memo(RatingInner);
+Rating.displayName = 'Rating';

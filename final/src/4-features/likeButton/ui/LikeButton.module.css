@@ -1,0 +1,25 @@
+.likeButton {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	transition: transform 0.2s;
+}
+
+.likeButton:hover {
+	transform: scale(1.15);
+}
+
+.likeIcon {
+	transition: fill 0.2s;
+	fill: gray;
+}
+
+.likeButton:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
